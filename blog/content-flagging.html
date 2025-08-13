@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Content Flagging with Azure Vision API - Arvind Singh</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/blog.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">Arvind Singh</a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="blog-post">
+        <article>
+            <header class="post-header">
+                <h1>Intelligent Content Flagging with Azure Vision API and OpenCV</h1>
+                <div class="post-meta">
+                    <time datetime="2025-08-13">August 13, 2025</time>
+                    <span class="read-time">10 min read</span>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <div class="table-of-contents">
+                    <h2>Table of Contents</h2>
+                    <ul>
+                        <li><a href="#context">Context and Background</a></li>
+                        <li><a href="#business-value">Business Value and Use Cases</a></li>
+                        <li><a href="#implementation">Technical Implementation</a>
+                            <ul>
+                                <li><a href="#screen-capture">Screen Capture System</a></li>
+                                <li><a href="#azure-vision">Azure Vision Integration</a></li>
+                                <li><a href="#text-recognition">Text Recognition with Tesseract</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#architecture">System Architecture</a></li>
+                        <li><a href="#performance">Performance Considerations</a></li>
+                        <li><a href="#security">Security and Privacy</a></li>
+                        <li><a href="#reference">Reference Links</a></li>
+                    </ul>
+                </div>
+
+                <h2 id="context">Context and Background</h2>
+                <p>In today's digital landscape, organizations face increasing challenges in monitoring and moderating visual content in real-time. Whether it's for content moderation, compliance monitoring, or safety protocols, there's a growing need for automated systems that can:</p>
+                <ul>
+                    <li>Capture and analyze screen content in real-time</li>
+                    <li>Detect inappropriate or sensitive content automatically</li>
+                    <li>Extract and analyze text from screen captures</li>
+                    <li>Provide immediate alerts and notifications</li>
+                </ul>
+
+                <h2 id="business-value">Business Value and Use Cases</h2>
+                <div class="business-value-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Use Case</th>
+                                <th>Implementation</th>
+                                <th>Business Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Content Moderation</td>
+                                <td>Real-time screening of visual content</td>
+                                <td>Reduced risk of inappropriate content exposure</td>
+                            </tr>
+                            <tr>
+                                <td>Compliance Monitoring</td>
+                                <td>Automated detection of sensitive information</td>
+                                <td>Enhanced regulatory compliance</td>
+                            </tr>
+                            <tr>
+                                <td>Workplace Safety</td>
+                                <td>Screen monitoring for safety protocols</td>
+                                <td>Improved workplace safety standards</td>
+                            </tr>
+                            <tr>
+                                <td>Quality Assurance</td>
+                                <td>Automated content quality checks</td>
+                                <td>Consistent content standards</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 id="implementation">Technical Implementation</h2>
+                
+                <h3 id="screen-capture">Screen Capture System</h3>
+                <pre><code>def capture_window(sct, hwnd=None):
+    """Capture either full screen or specific window"""
+    if hwnd is None:
+        # Capture full screen
+        monitor = sct.monitors[1]  # Primary monitor
+        screenshot = sct.grab(monitor)
+    else:
+        # Capture specific window
+        try:
+            rect = win32gui.GetWindowRect(hwnd)
+            x, y, w, h = rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]
+            monitor = {
+                "top": y,
+                "left": x,
+                "width": w,
+                "height": h
+            }
+            screenshot = sct.grab(monitor)
+        except Exception as e:
+            print(f"Error capturing window: {e}")
+            return None
+    
+    return np.array(screenshot)</code></pre>
+
+                <h3 id="azure-vision">Azure Vision Integration</h3>
+                <pre><code>def analyze_frame_content(image):
+    """Analyze frame for adult or racy content using Azure Vision"""
+    try:
+        # Convert numpy array to bytes
+        is_success, buffer = cv2.imencode(".jpg", image)
+        if not is_success:
+            return False, "Failed to encode image"
+            
+        # Convert to byte stream
+        image_stream = io.BytesIO(buffer.tobytes())
+        
+        # Analyze image
+        results = vision_client.analyze_image_in_stream(
+            image_stream,
+            visual_features=[VisualFeatureTypes.adult]
+        )
+        
+        if results.adult.is_adult_content or results.adult.is_racy_content:
+            content_type = "adult" if results.adult.is_adult_content else "racy"
+            confidence = results.adult.adult_score if results.adult.is_adult_content else results.adult.racy_score
+            return True, f"WARNING: {content_type.upper()} content detected (confidence: {confidence:.2f})"
+            
+        return False, None
+        
+    except Exception as e:
+        return False, f"Content analysis error: {str(e)}"</code></pre>
+
+                <h2 id="architecture">System Architecture</h2>
+                <p>The system is built using a modular architecture that combines several key components:</p>
+                <ul>
+                    <li><strong>Screen Capture Module:</strong> Uses MSS library for efficient screen capture</li>
+                    <li><strong>Azure Vision API Integration:</strong> Handles content analysis and flagging</li>
+                    <li><strong>OCR Processing:</strong> Uses Tesseract for text extraction</li>
+                    <li><strong>GUI Interface:</strong> Tkinter-based window selection interface</li>
+                </ul>
+
+                <h2 id="performance">Performance Considerations</h2>
+                <ul>
+                    <li>Content analysis performed every 60 frames (approximately every 2 seconds)</li>
+                    <li>OCR processing executed every 30 frames</li>
+                    <li>Efficient memory management using NumPy arrays</li>
+                    <li>Asynchronous processing for API calls</li>
+                </ul>
+
+                <h2 id="security">Security and Privacy</h2>
+                <ol>
+                    <li>
+                        <strong>API Key Management</strong>
+                        <p>Secure storage and handling of Azure Vision API credentials</p>
+                    </li>
+                    <li>
+                        <strong>Data Processing</strong>
+                        <p>Local processing of screen captures with minimal data retention</p>
+                    </li>
+                    <li>
+                        <strong>User Consent</strong>
+                        <p>Clear window selection interface for user awareness</p>
+                    </li>
+                    <li>
+                        <strong>Error Handling</strong>
+                        <p>Robust error handling and graceful degradation</p>
+                    </li>
+                </ol>
+
+                <h2 id="reference">Reference Links</h2>
+                <ul>
+                    <li><a href="https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/">Azure Computer Vision Documentation</a></li>
+                    <li><a href="https://github.com/UB-Mannheim/tesseract/wiki">Tesseract OCR</a></li>
+                    <li><a href="https://python-mss.readthedocs.io/">MSS Documentation</a></li>
+                    <li><a href="https://docs.opencv.org/4.x/">OpenCV Documentation</a></li>
+                    <li><a href="https://docs.python.org/3/library/tkinter.html">Tkinter Documentation</a></li>
+                    <li><a href="http://pywin32.sourceforge.net/">PyWin32 Documentation</a></li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>This implementation demonstrates a powerful combination of Azure Vision API and OpenCV for real-time content monitoring and flagging. By leveraging cloud-based AI services with efficient local processing, organizations can implement robust content moderation systems that scale with their needs while maintaining high performance and reliability.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Arvind Singh. All rights reserved.</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

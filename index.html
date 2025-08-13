@@ -1,749 +1,1409 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Nikira Software</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arvind Singh - Azure Cloud Expert & Tech Leader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        <!-- Favicons -->
-        <link href="img/favicon.png" rel="icon">
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300|Nunito:400,700&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
 
-        <!-- Bootstrap CSS File -->
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        /* Header & Navigation */
+        header {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
 
-        <!-- Vendor CSS Files -->
-        <link href="vendor/ionicons/css/ionicons.min.css" rel="stylesheet">
-        <link href="vendor/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="vendor/lightbox/css/lightbox.min.css" rel="stylesheet">
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        <!-- Main Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-    </head>
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
 
-    <body>
-        <!-- Header Section Start -->
-        <header class="header">
-            <div class="container-fluid">
-                <div class="logo pull-left">
-                    <!-- <h1><a href="index.html">Nikira Software</a></h1> -->
-                    <a href="#"><img src="img/logo_transparent.png" alt="" title="" href="index.html" width="20%"  /></a>
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="80" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideUp 1s ease 0.2s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: slideUp 1s ease 0.4s forwards;
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-secondary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-primary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Blog Section */
+        .blog {
+            background: var(--bg-secondary);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--bg-primary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .blog-image {
+            height: 150px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .blog-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog hover effects */
+        .blog-card a:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-image {
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#home" class="logo">Arvind Singh</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Hi, I'm Arvind Singh</h1>
+            <p>Lead Consultant | Azure Cloud Expert | .NET & AI/ML Practitioner</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="section-title">About Me</div>
+        <div class="about-content">
+            <div class="about-image">👨‍💻</div>
+            <div>
+                <div class="about-text">
+                    <p>I'm a highly accomplished technology leader with 15+ years of comprehensive experience in software product and service delivery. I specialize in driving innovative solutions through strategic application design and development, with deep expertise in cloud technologies and team leadership.</p>
+                    <p>Currently serving as Lead Consultant at Streben Pty Ltd, I've designed and developed comprehensive cloud-based SaaS platforms that process over 1 million sales annually, helping businesses reduce operational costs by 40% through cloud resource optimization.</p>
                 </div>
+                <div class="skills">
+                    <span class="skill-tag">Azure Cloud</span>
+                    <span class="skill-tag">C#/.NET</span>
+                    <span class="skill-tag">ASP.NET Core</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">React/Next.js</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">IoT</span>
+                    <span class="skill-tag">AI/ML</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Scrum Master</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <nav id="nav-menu-container">
-                    <ul class="nav-menu">
-                        <li class="menu-active"><a href="index.html">Home</a></li>                     
-                     
-                        <!-- <li><a href="portfolio.html">Portfolio</a></li>                      -->
-                        <!-- <li class="menu-has-children"><a href="#">Dropdown <i class="dicon ion-md-arrow-dropdown"></i></a>
-                            <ul>
-                                <li><a href="">Dropdown Item</a></li>
-                                <li><a href="">Dropdown Item</a></li>
-                                <li><a href="">Dropdown Item</a></li>
-                                <li><a href="">Dropdown Item</a></li>
-                                <li><a href="">Dropdown Item</a></li>
-                            </ul>
-                        </li> -->
-                     
+    <section id="projects">
+        <div class="section-title">My Projects</div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">🏪</div>
+                <div class="project-content">
+                    <h3 class="project-title">Cloud-based Vending Management SaaS</h3>
+                    <p class="project-description">Comprehensive cloud platform revolutionizing vending operations management with high-volume transaction processing. Handles 1M+ sales annually and reduced operational costs by 40%.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Azure</span>
+                        <span class="project-tag">C#/.NET</span>
+                        <span class="project-tag">ASP.NET Core</span>
+                        <span class="project-tag">Azure SQL</span>
+                        <span class="project-tag">IoT Hub</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Case Study</a>
+                        <a href="mailto:arvind.singh.agra@gmail.com" class="project-link">📧 Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">⚡</div>
+                <div class="project-content">
+                    <h3 class="project-title">Energy Monitoring IoT Solution</h3>
+                    <p class="project-description">Advanced energy monitoring platform for US energy corporation with real-time data analytics, predictive maintenance, and intelligent resource optimization capabilities.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">IoT</span>
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">TimescaleDB</span>
+                        <span class="project-tag">Azure Functions</span>
+                        <span class="project-tag">React</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Live Demo</a>
+                        <a href="https://linkedin.com/in/arvindsinghdev" class="project-link">💼 LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">⛏️</div>
+                <div class="project-content">
+                    <h3 class="project-title">Mining Equipment Marketplace</h3>
+                    <p class="project-description">Cloud-based inventory management platform connecting equipment manufacturers, sellers, and mine owners through intelligent vending machine deployment systems.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Cloud Architecture</span>
+                        <span class="project-tag">.NET Core</span>
+                        <span class="project-tag">Marketplace API</span>
+                        <span class="project-tag">IoT Integration</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Architecture</a>
+                        <a href="mailto:arvind.singh.agra@gmail.com" class="project-link">📧 Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">🎓</div>
+                <div class="project-content">
+                    <h3 class="project-title">K-12 EdTech Learning Platform</h3>
+                    <p class="project-description">Comprehensive Learning Management System supporting curriculum access, digital classrooms, and self-paced learning workflows for educational institutions.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">LMS</span>
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">PostgreSQL</span>
+                        <span class="project-tag">Education Tech</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Platform</a>
+                        <a href="#" class="project-link">📚 Documentation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">💳</div>
+                <div class="project-content">
+                    <h3 class="project-title">Payment Gateway Optimization</h3>
+                    <p class="project-description">Advanced payment processing system with pattern analysis that saved $1M+ by optimizing transaction flows and implementing ISO8583 standards.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Payment Systems</span>
+                        <span class="project-tag">ISO8583</span>
+                        <span class="project-tag">Pattern Analysis</span>
+                        <span class="project-tag">FinTech</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Case Study</a>
+                        <a href="https://linkedin.com/in/arvindsinghdev" class="project-link">💼 Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">🤖</div>
+                <div class="project-content">
+                    <h3 class="project-title">AI-Powered Business Intelligence</h3>
+                    <p class="project-description">Enterprise AI/ML platform combining IoT data with advanced analytics to transform operational data into actionable business intelligence using modern AI agents.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">AI/ML</span>
+                        <span class="project-tag">Agentic AI</span>
+                        <span class="project-tag">Azure ML</span>
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">OpenAI</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Demo</a>
+                        <a href="mailto:arvind.singh.agra@gmail.com" class="project-link">📧 Consult</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="blog">
+        <div class="section-title">Latest Blog Posts</div>
+        <div class="blog-grid">
+            <article class="blog-card">
+                <a href="blog/content-flagging.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">👁️</div>
+                    <div class="blog-content">
+                        <div class="blog-date">August 13, 2025</div>
+                        <h3 class="blog-title">Intelligent Content Flagging with Azure Vision API</h3>
+                        <p class="blog-excerpt">Building a real-time content monitoring system using Azure Vision API and OpenCV for automated content flagging, text recognition, and screen capture analysis...</p>
+                        <span class="blog-link">Read More</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="blog-card">
+                <a href="blog/agentic-ai.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">🤖</div>
+                    <div class="blog-content">
+                        <div class="blog-date">January 15, 2025</div>
+                        <h3 class="blog-title">Agentic AI in Enterprise: Beyond Chatbots</h3>
+                        <p class="blog-excerpt">Exploring how autonomous AI agents are revolutionizing business processes, from intelligent automation to decision-making systems that learn and adapt...</p>
+                        <span class="blog-link">Read More</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="blog-card">
+                <a href="blog/azure-vending.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">☁️</div>
+                    <div class="blog-content">
+                        <div class="blog-date">January 8, 2025</div>
+                        <h3 class="blog-title">Scaling Vending Management with Azure Cloud</h3>
+                        <p class="blog-excerpt">How we built a cloud-native SaaS platform that processes 1M+ transactions annually, achieving 40% cost reduction through smart resource optimization...</p>
+                        <span class="blog-link">Read More ⟶</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="blog-card">
+                <a href="blog/ai-deployment.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">🚀</div>
+                    <div class="blog-content">
+                        <div class="blog-date">December 28, 2024</div>
+                        <h3 class="blog-title">AI Deployment Strategies for Production</h3>
+                        <p class="blog-excerpt">Best practices for deploying AI/ML models in enterprise environments, covering MLOps, monitoring, and scaling considerations for real-world applications...</p>
+                        <span class="blog-link">Read More ⟶</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="blog-card">
+                <a href="blog/ai-retail.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">🛒</div>
+                    <div class="blog-content">
+                        <div class="blog-date">December 20, 2024</div>
+                        <h3 class="blog-title">AI in Retail: Transforming Consumer Experience</h3>
+                        <p class="blog-excerpt">How AI is reshaping retail operations through intelligent inventory management, personalized recommendations, and predictive analytics...</p>
+                        <span class="blog-link">Read More ⟶</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="blog-card">
+                <a href="blog/iot-analytics.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">⚡</div>
+                    <div class="blog-content">
+                        <div class="blog-date">December 12, 2024</div>
+                        <h3 class="blog-title">IoT Data Analytics: From Sensors to Insights</h3>
+                        <p class="blog-excerpt">Building robust IoT data pipelines that transform raw sensor data into actionable business intelligence using Azure IoT Hub and TimescaleDB...</p>
+                        <span class="blog-link">Read More ⟶</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="blog-card">
+                <a href="blog/enterprise-ai-ethics.html" style="text-decoration: none; color: inherit;">
+                    <div class="blog-image">🎯</div>
+                    <div class="blog-content">
+                        <div class="blog-date">August 13, 2025</div>
+                        <h3 class="blog-title">Enterprise AI Ethics and Responsible Deployment</h3>
+                        <p class="blog-excerpt">Implementing ethical AI frameworks in enterprise applications, ensuring data privacy, bias mitigation, and responsible AI practices...</p>
+                        <span class="blog-link">Read More ⟶</span>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-title">Get In Touch</div>
+        <div class="contact-content">
+            <p>I'm always interested in new opportunities and innovative projects. Based in Pune, India, available for remote consultations worldwide.</p>
+            
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell me about your project or how I can help..." required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+
+            <div class="contact-info" style="text-align: center; margin: 2rem 0; color: var(--text-secondary);">
+                <p>📧 <a href="mailto:arvind.singh.agra@gmail.com" style="color: var(--primary-color);">arvind.singh.agra@gmail.com</a></p>
+                <p>📱 <a href="tel:+917709525390" style="color: var(--primary-color);">+91 7709525390</a></p>
+                <p>📍 Pune, Maharashtra, India</p>
+            </div>
+
+            <div class="social-links">
+                <a href="https://linkedin.com/in/arvindsinghdev" target="_blank" class="social-link" title="LinkedIn">💼</a>
+                <a href="mailto:arvind.singh.agra@gmail.com" class="social-link" title="Email">📧</a>
+                <a href="tel:+917709525390" class="social-link" title="Phone">📱</a>
+                <a href="#" class="social-link" title="GitHub">🔗</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Arvind Singh. All rights reserved. Lead Consultant | Azure Cloud Expert | Built with ❤️ and hosted on GitHub Pages.</p>
+    </footer>
+
+    <script>
+        // Initialize page interactions
+            'agentic-ai': {
+                title: 'Agentic AI in Enterprise: Beyond Chatbots',
+                date: 'January 15, 2025',
+                content: `
+                    <h3>Introduction to Agentic AI</h3>
+                    <p>Agentic AI represents the next evolution in enterprise automation, moving beyond simple chatbots to create truly autonomous systems that can understand context, make decisions, and take actions independently.</p>
+
+                    <h4>Key Components</h4>
+                    <pre><code>// Agentic AI System Architecture
+public class AgentSystem {
+    private readonly IDecisionEngine decisionEngine;
+    private readonly IContextManager contextManager;
+    private readonly IActionExecutor actionExecutor;
+    private readonly IMemoryStore memoryStore;
+
+    public async Task&lt;AgentResponse&gt; ProcessRequest(AgentRequest request) {
+        // Build context from current request and historical memory
+        var context = await contextManager.BuildContext(
+            request, 
+            await memoryStore.GetRelevantHistory(request)
+        );
+        
+        // Make decision based on context and goals
+        var decision = await decisionEngine.Evaluate(
+            context,
+            request.BusinessGoals
+        );
+        
+        // Execute actions and store results
+        var result = await actionExecutor.Execute(decision);
+        await memoryStore.StoreInteraction(request, result);
+        
+        return result;
+    }
+}</code></pre>
+
+                    <h4>Azure Integration</h4>
+                    <p>Implementing Agentic AI on Azure leverages several key services:</p>
+                    <ul>
+                        <li>Azure OpenAI Service for natural language understanding</li>
+                        <li>Azure Cognitive Services for specialized tasks</li>
+                        <li>Azure Functions for serverless execution</li>
+                        <li>Cosmos DB for context and memory storage</li>
                     </ul>
-                </nav>
-            </div>
-        </header>
-        <!-- Header Section End -->
 
-        <!-- Slider Section Start-->
-        <!-- <section class="slider">
-            <div class="slider-container">
-                <div id="carousel" class="carousel  slide carousel-fade" data-ride="carousel">
+                    <h4>Implementation Example</h4>
+                    <pre><code>public class AzureAgentService {
+    private readonly OpenAIClient openAIClient;
+    private readonly CosmosClient cosmosClient;
 
-                    <ol class="carousel-indicators"></ol>
+    public async Task&lt;AgentAction&gt; GetNextAction(string context) {
+        // Get action recommendation from GPT-4
+        var completion = await openAIClient.GetChatCompletions(
+            "gpt-4",
+            new ChatCompletionsOptions {
+                Messages = {
+                    new ChatMessage(ChatRole.System, "You are an AI agent..."),
+                    new ChatMessage(ChatRole.User, context)
+                },
+                Temperature = 0.3f,
+                MaxTokens = 500
+            }
+        );
 
-                    <div class="carousel-inner" role="listbox">
+        // Parse and validate the recommended action
+        var action = ParseAction(completion.Choices[0].Message.Content);
+        return await ValidateAndEnrichAction(action);
+    }
 
-                        <div class="carousel-item active">
-                            <div class="carousel-background"><img src="img/slider-1.jpg" alt=""></div>
-                            <div class="carousel-container">
-                                <div class="carousel-content">
-                                    <h2>Web Development</h2>
-                                    <p>
-                                        We take pride in our commitment to excellence and our ability to deliver quality solutions on time and within budget. Our clients' success is our top priority, and we strive to build long-term partnerships with each and every one of them.t also scalable and future-proof.
-                                    </p>
-                                    
-                                </div>
-                            </div>
-                        </div>
+    private async Task&lt;AgentAction&gt; ValidateAndEnrichAction(AgentAction action) {
+        // Add business rules validation
+        // Check authorization levels
+        // Enrich with additional context
+        return action;
+    }
+}</code></pre>
 
-                        <div class="carousel-item">
-                            <div class="carousel-background"><img src="img/slider-2.jpg" alt=""></div>
-                            <div class="carousel-container">
-                                <div class="carousel-content">
-                                    <h2>App Development</h2>
-                                    <p>
-                                        Maecenas vel turpis quis lorem aliquam tempus quis non mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                    <h4>Best Practices</h4>
+                    <ol>
+                        <li>Implement robust monitoring and logging</li>
+                        <li>Use staged rollout with human oversight</li>
+                        <li>Maintain clear audit trails of agent actions</li>
+                        <li>Implement circuit breakers for safety</li>
+                    </ol>
+                `
+            },
+            'azure-vending': {
+                title: 'Scaling Vending Management with Azure Cloud',
+                date: 'January 8, 2025',
+                content: `
+                    <h3>Building a Cloud-Native Vending Platform</h3>
+                    <p>Learn how we built a scalable vending management system processing over 1 million transactions annually using Azure services.</p>
 
-                        <div class="carousel-item">
-                            <div class="carousel-background"><img src="img/slider-3.jpg" alt=""></div>
-                            <div class="carousel-container">
-                                <div class="carousel-content">
-                                    <h2>Game Development</h2>
-                                    <p>
-                                        Aenean volutpat, dolor eu finibus rhoncus, elit felis vehicula nunc, ut pulvinar ex diam nec lacus. Phasellus sit amet rhoncus turpis. Aenean tincidunt auctor purus
-                                    </p>
-                                    <a href="https://htmlcodex.com" class="btn-get-started">Get Started</a>
-                                </div>
-                            </div>
-                        </div>
+                    <h4>Architecture Overview</h4>
+                    <pre><code>// High-level system architecture
+IoT Devices → Azure IoT Hub → Event Hub
+    ↓
+Stream Analytics → Azure Functions
+    ↓
+Cosmos DB ← Azure App Service → Power BI</code></pre>
 
-                    </div>
+                    <h4>IoT Implementation</h4>
+                    <pre><code>public class VendingDevice {
+    private readonly DeviceClient deviceClient;
+    private readonly string deviceId;
+    private readonly ILogger logger;
 
-                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon ion-md-arrow-back" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
+    public async Task SendTelemetry() {
+        var telemetry = new {
+            deviceId = this.deviceId,
+            timestamp = DateTime.UtcNow,
+            temperature = await GetTemperature(),
+            inventory = await GetInventoryLevels(),
+            sales = await GetSalesData()
+        };
 
-                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon ion-md-arrow-forward" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+        var message = new Message(
+            Encoding.UTF8.GetBytes(
+                JsonSerializer.Serialize(telemetry)
+            )
+        );
 
-                </div>
-            </div>
-        </section> -->
-        <!-- Slider Section End-->
+        await deviceClient.SendEventAsync(message);
+        logger.LogInformation($"Telemetry sent for device {deviceId}");
+    }
+}</code></pre>
 
-        <!-- About Us Section Start-->
-        <section class="about">
-            <div class="container">               
+                    <h4>Real-time Processing</h4>
+                    <pre><code>// Azure Function for processing sales
+public class SalesProcessor {
+    private readonly CosmosClient cosmosClient;
+    private readonly INotificationService notificationService;
 
-                <div class="row align-items-center about-row">
-                    <div class="col-md-6">
-                        <img src="img/about.jpg" alt="" class="img-fluid">
-                    </div>
-                    <div class="col-md-6">
-                        <h2 class="title"><a href="#">Welcome to Our Site</a></h2>
-                        <p>
-                            We take pride in our commitment to excellence and our ability to deliver quality solutions on time and within budget. Our clients' success is our top priority, and we strive to build long-term partnerships with each and every one of them.                        </p>
-                        
-                    </div>
-                </div>
+    [FunctionName("ProcessSale")]
+    public async Task Run(
+        [IoTHubTrigger("messages/events")] EventData message,
+        ILogger log)
+    {
+        var sale = JsonSerializer.Deserialize&lt;SaleEvent&gt;(
+            message.Body.ToString()
+        );
 
-               
-            </div>
-        </section>
-        <!-- About Us Section End -->
+        // Update inventory
+        await UpdateInventory(sale.DeviceId, sale.ProductId);
 
-        <!-- Services Section Start -->
-        <section id="services" class="services">
-            <div class="container">
-                <header class="section-header">
-                    <h3>Services</h3>
-                    <p>We offer a range of software consultancy services to help your business achieve its technology goals:</p>
-                    <ul style="list-style-type:none;">
-                      <li>Custom software development</li>
-                      <li>System integration</li>
-                      <li>Technology consulting</li>
-                      <li>Web and mobile app development</li>
-                      <li>Software testing and quality assurance</li>
-                      <li>Project management</li>
+        // Check restock needs
+        if (await NeedsRestock(sale.DeviceId, sale.ProductId)) {
+            await notificationService.SendRestockAlert(
+                sale.DeviceId,
+                sale.ProductId
+            );
+        }
+
+        // Record analytics
+        await RecordAnalytics(sale);
+    }
+}</code></pre>
+
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Real-time inventory tracking</li>
+                        <li>Predictive maintenance</li>
+                        <li>Automated restocking</li>
+                        <li>Sales analytics</li>
                     </ul>
-                </header>
-                
-            </div>
-        </section>
-        <!-- Services Section End -->
 
-        <!-- Call To Action Start -->
+                    <h4>Performance Optimization</h4>
+                    <pre><code>public class PerformanceConfig {
+    public class CachingStrategy {
+        public TimeSpan ProductCacheDuration { get; set; } 
+            = TimeSpan.FromMinutes(15);
         
-        <!-- Call To Action End -->
+        public TimeSpan InventoryCacheDuration { get; set; } 
+            = TimeSpan.FromSeconds(30);
+            
+        public TimeSpan SalesStatsCacheDuration { get; set; }
+            = TimeSpan.FromHours(1);
+    }
 
-        <!--Pricing Section start-->
-        <!-- <section class="pricing">
-            <div class="container">
-                <header class="section-header">
-                    <h3>Our Pricing</h3>
-                    <p>
-                        Nulla in est tincidunt, volutpat mi quis, gravida tortor. Suspendisse potenti. Nullam ornare, dui a vulputate mollis, est lorem ultrices neque.
-                    </p>
-                </header>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="price-content">
-                            <div class="price-plan">
-                                <p class="price-title">Silver</p>
-                                <h2 class="price-amount">9.<span>99</span></h2>
-                                <p class="price-date">Per Month</p>
-                            </div>
-                            <ul class="price-details">
-                                <li><i class="ion-md-checkmark"></i><strong>HTML5</strong> and <strong>CSS3</strong></li>
-                                <li><i class="ion-md-checkmark"></i><strong>Bootstrap 4</strong></li>
-                                <li><i class="ion-md-checkmark"></i><strong>Well-commented</strong> code</li>
-                                <li><i class="ion-md-close"></i><strong>IonIcons</strong> integrated</li>
-                                <li><i class="ion-md-close"></i>Free <strong>Google Font</strong> integrated</li>
-                                <li><i class="ion-md-close"></i><strong>Responsive</strong> design</li>
-                            </ul>
-                            <a href="#" class="btn mian-btn price-btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="price-content features-price">
-                            <div class="price-plan">
-                                <p class="price-title">Gold</p>
-                                <h2 class="price-amount">19.<span>99</span></h2>
-                                <p class="price-date">Per Month</p>
-                            </div>
-                            <ul class="price-details">
-                                <li><i class="ion-md-checkmark"></i><strong>HTML5</strong> and <strong>CSS3</strong></li>
-                                <li><i class="ion-md-checkmark"></i><strong>Bootstrap 4</strong></li>
-                                <li><i class="ion-md-checkmark"></i><strong>Well-commented</strong> code</li>
-                                <li><i class="ion-md-checkmark"></i><strong>IonIcons</strong> integrated</li>
-                                <li><i class="ion-md-checkmark"></i>Free <strong>Google Font</strong> integrated</li>
-                                <li><i class="ion-md-close"></i><strong>Responsive</strong> design</li>
-                            </ul>
-                            <a href="#" class="btn mian-btn price-btn features-price-btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="price-content">
-                            <div class="price-plan">
-                                <p class="price-title">Platinum</p>
-                                <h2 class="price-amount">29.<span>99</span></h2>
-                                <p class="price-date">Per Month</p>
-                            </div>
-                            <ul class="price-details">
-                                <li><i class="ion-md-checkmark"></i><strong>HTML5</strong> and <strong>CSS3</strong></li>
-                                <li><i class="ion-md-checkmark"></i><strong>Bootstrap 4</strong></li>
-                                <li><i class="ion-md-checkmark"></i><strong>Well-commented</strong> code</li>
-                                <li><i class="ion-md-checkmark"></i><strong>IonIcons</strong> integrated</li>
-                                <li><i class="ion-md-checkmark"></i>Free <strong>Google Font</strong> integrated</li>
-                                <li><i class="ion-md-checkmark"></i><strong>Responsive</strong> design</li>
-                            </ul>
-                            <a href="#" class="btn mian-btn price-btn">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-        <!--Pricing Section End-->
+    public class ScalingRules {
+        public int MinInstances { get; set; } = 2;
+        public int MaxInstances { get; set; } = 20;
+        public double CpuThreshold { get; set; } = 70;
+        public int ConcurrentRequests { get; set; } = 100;
+    }
+}</code></pre>
+                `
+            },
+            'ai-deployment': {
+                title: 'AI Deployment Strategies for Production',
+                date: 'December 28, 2024',
+                content: `
+                    <h3>Enterprise AI Deployment Best Practices</h3>
+                    <p>Successfully deploying AI models in production requires careful consideration of infrastructure, monitoring, and scaling strategies.</p>
 
-        <!-- Skills Section Start-->
-        <section class="skills">
-            <div class="container">
-                <header class="section-header">
-                    <h3>Our Skills</h3>
-                    
-                </header>
+                    <h4>MLOps Pipeline</h4>
+                    <pre><code>public class MLOpsDeployment {
+    private readonly AzureMLClient mlClient;
+    private readonly IMonitoring monitoring;
+    private readonly IMetricsCollector metrics;
 
-                <div class="skills-content">
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">.NET <i class="val">100%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">Angular/AngulaJS/React/Next.js <i class="val">100%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">HTML/CSS <i class="val">90%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">Cloud <i class="val">70%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">IOT<i class="val">60%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">UX/UI <i class="val">80%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">Python <i class="val">40%</i></span>
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                            <span class="skill">Java <i class="val">40%</i></span>
-                        </div>
-                    </div>
-                </div>
+    public async Task RegisterModel(string modelName, string modelPath, 
+        Dictionary&lt;string, object&gt; metrics) 
+    {
+        // Register model with version control
+        var model = await mlClient.Models.CreateOrUpdateAsync(
+            new ModelVersionResource {
+                Name = modelName,
+                Path = modelPath,
+                Properties = new Dictionary&lt;string, string&gt; {
+                    { "Algorithm", "GPT-4" },
+                    { "Framework", "PyTorch" },
+                    { "TrainingDataset", "version-2025-01" }
+                }
+            }
+        );
 
-                <div class="row counters">
-                    <div class="col-lg-3 col-6 text-center">
-                        <h2 data-toggle="counter-up">10</h2>
-                        <p>Our Staffs</p>
-                    </div>
+        // Log deployment metrics
+        await this.metrics.TrackDeployment(model.Id, metrics);
+    }
+}</code></pre>
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <h2 data-toggle="counter-up">20</h2>
-                        <p>Our Clients</p>
-                    </div>
+                    <h4>Deployment Patterns</h4>
+                    <pre><code>public class DeploymentStrategies {
+    public class BlueGreenDeployment {
+        private readonly ILoadBalancer loadBalancer;
+        private readonly IHealthCheck healthCheck;
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <h2 data-toggle="counter-up">15</h2>
-                        <p>Completed Projects</p>
-                    </div>
+        public async Task SwitchToGreen() {
+            // Deploy to green environment
+            await DeployToEnvironment("green");
+            
+            // Verify health
+            if (await healthCheck.Verify("green")) {
+                // Switch traffic
+                await loadBalancer.SwitchTraffic("green");
+                // Keep blue as fallback
+            }
+        }
+    }
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <h2 data-toggle="counter-up">4</h2>
-                        <p>Running Projects</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Skills Section End-->
+    public class CanaryDeployment {
+        public async Task&lt;bool&gt; RolloutToSubset(
+            double percentage, TimeSpan evaluationPeriod) 
+        {
+            // Route percentage of traffic to new version
+            await routingService.UpdateTrafficSplit(percentage);
+            
+            // Monitor for issues during evaluation period
+            var metrics = await CollectMetrics(evaluationPeriod);
+            
+            return metrics.AreWithinThresholds();
+        }
+    }
+}</code></pre>
 
-        <!-- Portfolio Section Start -->
-        <!-- <section class="portfolio">
-            <div class="container">
+                    <h4>Monitoring and Observability</h4>
+                    <ul>
+                        <li>Real-time performance metrics</li>
+                        <li>Data drift detection</li>
+                        <li>Resource utilization</li>
+                        <li>Error rate tracking</li>
+                    </ul>
 
-                <header class="section-header">
-                    <h3 class="section-title">Our Portfolio</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper pharetra ligula nec hendrerit. Ut eu libero nec magna placerat fringilla.
-                    </p>
-                </header>
+                    <h4>Scaling Strategies</h4>
+                    <pre><code>public class ScalingConfig {
+    public class AutoscalingRules {
+        public int MinReplicas { get; set; } = 2;
+        public int MaxReplicas { get; set; } = 10;
+        public double CpuThreshold { get; set; } = 70;
+        public int RequestsPerSecond { get; set; } = 1000;
+        public TimeSpan ScaleDownDelay { get; set; } 
+            = TimeSpan.FromMinutes(10);
+    }
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul id="portfolio-flters">
-                            <li data-filter="*" class="filter-active">All</li>
-                            <li data-filter=".web-des">Web Design</li>
-                            <li data-filter=".web-dev">Web Development</li>
-                            <li data-filter=".app-des">App Design</li>
-                            <li data-filter=".app-dev">App Development</li>
-                        </ul>
-                    </div>
-                </div>
+    public class LoadBalancingStrategy {
+        public string Algorithm { get; set; } = "RoundRobin";
+        public int MaxConcurrentRequests { get; set; } = 100;
+        public TimeSpan Timeout { get; set; } 
+            = TimeSpan.FromSeconds(30);
+    }
+}</code></pre>
+                `
+            },
+            'ai-retail': {
+                title: 'AI in Retail: Transforming Consumer Experience',
+                date: 'December 20, 2024',
+                content: `
+                    <h3>AI-Powered Retail Innovation</h3>
+                    <p>Implementing AI solutions in retail to enhance customer experience and optimize operations.</p>
 
-                <div class="row portfolio-container">
-                    <div class="col-lg-4 col-md-6 portfolio-item web-des">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio-1.jpg" class="img-fluid" alt="Portfolio">
-                                <a href="img/portfolio-1.jpg" data-lightbox="portfolio" data-title="Lorem ipsum dolor" class="link-preview" title="Preview"><i class="ion-md-eye"></i></a>
-                                <a href="" class="link-details" title="More Details"><i class="ion-md-open"></i></a>
-                            </figure>
+                    <h4>Recommendation System</h4>
+                    <pre><code>public class RecommendationEngine {
+    private readonly IProductCatalog catalog;
+    private readonly IUserBehavior userBehavior;
+    private readonly IAiModel recommendationModel;
 
-                            <div class="portfolio-info">
-                                <h4>Lorem ipsum dolor</h4>
-                                <p>Web Design</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item web-dev">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio-2.jpg" class="img-fluid" alt="Portfolio">
-                                <a href="img/portfolio-2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Nulla ullamcorper pharetra" title="Preview"><i class="ion-md-eye"></i></a>
-                                <a href="" class="link-details" title="More Details"><i class="ion-md-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4>Nulla ullamcorper pharetra</h4>
-                                <p>Web Development</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item app-des">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio-3.jpg" class="img-fluid" alt="Portfolio">
-                                <a href="img/portfolio-3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Phasellus eget dictum" title="Preview"><i class="ion-md-eye"></i></a>
-                                <a href="" class="link-details" title="More Details"><i class="ion-md-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4>Phasellus eget dictum</h4>
-                                <p>App Design</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item app-dev">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio-4.jpg" class="img-fluid" alt="Portfolio">
-                                <a href="img/portfolio-4.jpg" data-lightbox="portfolio" data-title="Lorem ipsum dolor" class="link-preview" title="Preview"><i class="ion-md-eye"></i></a>
-                                <a href="" class="link-details" title="More Details"><i class="ion-md-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4>Donec mattis vestibulum</h4>
-                                <p>App Development</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item web-des">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio-5.jpg" class="img-fluid" alt="Portfolio">
-                                <a href="img/portfolio-5.jpg" class="link-preview" data-lightbox="portfolio" data-title="Nulla ullamcorper pharetra" title="Preview"><i class="ion-md-eye"></i></a>
-                                <a href="" class="link-details" title="More Details"><i class="ion-md-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4>Pellentesque ullamcorper</h4>
-                                <p>Web Design</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item web-dev">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio-6.jpg" class="img-fluid" alt="Portfolio">
-                                <a href="img/portfolio-6.jpg" class="link-preview" data-lightbox="portfolio" data-title="Phasellus eget dictum" title="Preview"><i class="ion-md-eye"></i></a>
-                                <a href="" class="link-details" title="More Details"><i class="ion-md-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4>Sed pretium sapien</h4>
-                                <p>Web Development</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section> -->
-        <!-- Portfolio Section End -->
+    public async Task&lt;List&lt;ProductRecommendation&gt;&gt; 
+        GetPersonalizedRecommendations(string userId, 
+            string currentProduct = null)
+    {
+        // Get user's purchase history
+        var history = await userBehavior.GetHistory(userId);
         
-        <!-- Team Section Start -->
-        <!-- <section class="team">
-            <div class="container">
-                <header class="section-header">
-                    <h3 class="section-title">Meet our team</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper pharetra ligula nec hendrerit. Ut eu libero nec magna placerat fringilla.
-                    </p>
-                </header>
+        // Get real-time context
+        var context = new {
+            TimeOfDay = DateTime.Now.TimeOfDay,
+            CurrentProduct = currentProduct,
+            RecentViews = await userBehavior
+                .GetRecentViews(userId)
+        };
 
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card card-block">
-                            <a href="#"><img alt="" class="team-img" src="img/team-1.jpg">
-                                <div class="card-title-wrap">
-                                    <span class="card-title">John P. Haight</span> <span class="card-text">Web Designer</span>
-                                    <div class="social-nav">
-                                        <a href="#"><i class="ion-logo-twitter"></i></a>
-                                        <a href="#"><i class="ion-logo-facebook"></i></a>
-                                        <a href="#"><i class="ion-logo-linkedin"></i></a>
-                                        <a href="#"><i class="ion-logo-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+        // Generate recommendations
+        return await recommendationModel
+            .PredictTopItems(history, context);
+    }
+}</code></pre>
 
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card card-block">
-                            <a href="#"><img alt="" class="team-img" src="img/team-2.jpg">
-                                <div class="card-title-wrap">
-                                    <span class="card-title">David R. Bernard</span> <span class="card-text">Web Developer</span>
-                                    <div class="social-nav">
-                                        <a href="#"><i class="ion-logo-twitter"></i></a>
-                                        <a href="#"><i class="ion-logo-facebook"></i></a>
-                                        <a href="#"><i class="ion-logo-linkedin"></i></a>
-                                        <a href="#"><i class="ion-logo-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    <h4>Inventory Optimization</h4>
+                    <pre><code>public class InventoryOptimizer {
+    public class DemandPrediction {
+        public async Task&lt;decimal&gt; PredictDemand(
+            string productId, 
+            DateTime targetDate)
+        {
+            var historicalData = await GetHistoricalSales(
+                productId, 
+                targetDate.AddMonths(-12), 
+                targetDate
+            );
 
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card card-block">
-                            <a href="#"><img alt="" class="team-img" src="img/team-3.jpg">
-                                <div class="card-title-wrap">
-                                    <span class="card-title">Dana A. Thomas</span> <span class="card-text">App Designer</span>
-                                    <div class="social-nav">
-                                        <a href="#"><i class="ion-logo-twitter"></i></a>
-                                        <a href="#"><i class="ion-logo-facebook"></i></a>
-                                        <a href="#"><i class="ion-logo-linkedin"></i></a>
-                                        <a href="#"><i class="ion-logo-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+            return await mlModel.PredictValue(new {
+                historicalData,
+                seasonality = GetSeasonalityIndex(targetDate),
+                events = await GetUpcomingEvents(targetDate),
+                weatherForecast = await GetWeatherPrediction(
+                    targetDate
+                )
+            });
+        }
+    }
 
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card card-block">
-                            <a href="#"><img alt="" class="team-img" src="img/team-4.jpg">
-                                <div class="card-title-wrap">
-                                    <span class="card-title">Ava M. Proctor</span> <span class="card-text">App Developer</span>
-                                    <div class="social-nav">
-                                        <a href="#"><i class="ion-logo-twitter"></i></a>
-                                        <a href="#"><i class="ion-logo-facebook"></i></a>
-                                        <a href="#"><i class="ion-logo-linkedin"></i></a>
-                                        <a href="#"><i class="ion-logo-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-        <!-- Team Section End -->
+    public class StockOptimization {
+        public async Task&lt;decimal&gt; CalculateOptimalStock(
+            string productId,
+            decimal predictedDemand)
+        {
+            return await optimizer.Compute(new {
+                demand = predictedDemand,
+                leadTime = await GetSupplierLeadTime(productId),
+                holdingCost = await GetHoldingCost(productId),
+                stockoutCost = await GetStockoutCost(productId)
+            });
+        }
+    }
+}</code></pre>
 
-        <!-- Testimonials Section Start -->
-        <!-- <section class="testimonials">
-            <div class="container">
-                <header class="section-header">
-                    <h3 class="section-title">Testimonials</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper pharetra ligula nec hendrerit. Ut eu libero nec magna placerat fringilla.
-                    </p>
-                </header>
+                    <h4>Computer Vision Integration</h4>
+                    <pre><code>public class ShelfAnalytics {
+    private readonly IComputerVisionService visionService;
+    
+    public async Task&lt;ShelfAnalysis&gt; AnalyzeShelfImage(
+        byte[] imageData)
+    {
+        // Detect products and empty spaces
+        var detection = await visionService
+            .DetectObjects(imageData);
+            
+        // Analyze product placement
+        var placement = await AnalyzePlacement(detection);
+            
+        // Check planogram compliance
+        var compliance = await CheckPlanogramCompliance(
+            placement
+        );
+            
+        return new ShelfAnalysis {
+            StockLevels = CalculateStockLevels(detection),
+            MisplacedItems = placement.Violations,
+            ComplianceScore = compliance.Score,
+            RecommendedActions = GenerateActions(
+                detection, 
+                placement, 
+                compliance
+            )
+        };
+    }
+}</code></pre>
 
-                <div class="owl-carousel testimonials-carousel">
-                    <div class="testimonial-item row align-items-center">
-                        <div class="col-sm-3">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-1.jpg" alt="Testimonial image">
-                            </div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="testimonial-text">
-                                <h3>Anna M. Brzezinski</h3>
-                                <h4>businesswoman</h4>
-                                <p>
-                                    Nullam vulputate nunc diam, non congue est vestibulum ut. Curabitur placerat mauris non nisi cursus commodo. Integer dolor augue, maximus interdum pretium a, mattis ut mi.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item row align-items-center">
-                        <div class="col-sm-3">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-2.jpg" alt="Testimonial image">
-                            </div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="testimonial-text">
-                                <h3>Shirley H. Lee</h3>
-                                <h4>businesswoman</h4>
-                                <p>
-                                    Nullam vulputate nunc diam, non congue est vestibulum ut. Curabitur placerat mauris non nisi cursus commodo. Integer dolor augue, maximus interdum pretium a, mattis ut mi.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item row align-items-center">
-                        <div class="col-sm-3">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-3.jpg" alt="Testimonial image">
-                            </div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="testimonial-text">
-                                <h3>Kerry E. Thomas</h3>
-                                <h4>businesswoman</h4>
-                                <p>
-                                    Nullam vulputate nunc diam, non congue est vestibulum ut. Curabitur placerat mauris non nisi cursus commodo. Integer dolor augue, maximus interdum pretium a, mattis ut mi.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-        <!-- Testimonials Section End -->
-        
-        <!-- Clients Section Start -->
-        <!-- <section class="clients">
-            <div class="container">
-                <header class="section-header">
-                    <h3 class="section-title">Our Clients</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper pharetra ligula nec hendrerit. Ut eu libero nec magna placerat fringilla.
-                    </p>
-                </header>
+                    <h4>Real-time Analytics</h4>
+                    <pre><code>public class RetailAnalytics {
+    public async Task&lt;AnalyticsDashboard&gt; 
+        GenerateRealTimeInsights(string storeId)
+    {
+        var tasks = new[] {
+            GetFootTraffic(storeId),
+            GetConversionRate(storeId),
+            GetAverageTransactionValue(storeId),
+            GetPopularCategories(storeId),
+            GetStaffUtilization(storeId)
+        };
 
-                <div class="owl-carousel clients-carousel">
-                    <img src="img/client-1.jpg" alt="Client Logo">
-                    <img src="img/client-2.jpg" alt="Client Logo">
-                    <img src="img/client-3.jpg" alt="Client Logo">
-                    <img src="img/client-4.jpg" alt="Client Logo">
-                    <img src="img/client-5.jpg" alt="Client Logo">
-                    <img src="img/client-6.jpg" alt="Client Logo">
-                    <img src="img/client-7.jpg" alt="Client Logo">
-                    <img src="img/client-8.jpg" alt="Client Logo">
-                </div>
+        await Task.WhenAll(tasks);
 
-            </div>
-        </section> -->
-        <!-- Clients Section End -->
+        return new AnalyticsDashboard {
+            FootTraffic = tasks[0].Result,
+            ConversionRate = tasks[1].Result,
+            AvgTransactionValue = tasks[2].Result,
+            PopularCategories = tasks[3].Result,
+            StaffUtilization = tasks[4].Result
+        };
+    }
+}</code></pre>
+                `
+            }
+        };
 
-        <!-- Contact Section Start -->
-        <section class="contact">
-            <div class="container">
-                <div class="section-header">
-                    <h3 class="section-title">Contact Us</h3>
-                    
-                </div>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-                <div class="row contact-info">
-                    <div class="col-md-4">
-                        <div class="contact-address">
-                            <i class="ion-md-pin"></i>
-                            <h3>Address</h3>
-                            <address>Pune, India</address>
-                        </div>
-                    </div>
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
 
-                    <div class="col-md-4">
-                        <div class="contact-phone">
-                            <i class="ion-md-call"></i>
-                            <h3>Phone Number</h3>
-                            <p><a href="tel:+91-7709-525-390">+91-7709-525-390</a></p>
-                        </div>
-                    </div>
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
 
-                    <div class="col-md-4">
-                        <div class="contact-email">
-                            <i class="ion-md-mail"></i>
-                            <h3>Email</h3>
-                            <p><a href="mailto:info@nikirasoftware.com">info@nikirasoftware.com</a></p>
-                        </div>
-                    </div>
-                </div>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            mobileMenu.classList.toggle('active');
+        }
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- <div class="map">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26361250.667320687!2d-113.75533773453304!3d36.24128894212527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sbd!4v1574923227698!5m2!1sen!2sbd" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-                        </div> -->
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form">
-                            <form class="contactForm">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" placeholder="Your Name" />
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input type="email" class="form-control" placeholder="Your Email" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Subject" />
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="5" placeholder="Message"></textarea>
-                                </div>
-                                <div><button type="submit">Send Message</button></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Contact Section End -->
+                   
 
-        <!-- Footer Start -->
-        <footer class="footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 footer-info">
-                            <h3>Nikira Software</h3>
-                            <p>
-                                Welcome to our software consultancy
+        // Empty - modal code removed
 
-                                We are a team of experienced software consultants who are passionate about helping businesses achieve their technology goals. Our mission is to provide customized, innovative and cost-effective software solutions that enable our clients to stay ahead of the competition.                            </p>
-                        </div>
+        // Form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const message = formData.get('message');
+            
+            // Here you would typically send the data to a server
+            // For now, we'll just show an alert
+            alert(`Thank you for your message, ${name}! I'll get back to you soon.`);
+            
+            // Reset the form
+            event.target.reset();
+        }
 
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>About Us</h4>
-                            <ul>
-                                <li><i class="ion-md-arrow-dropright"></i> <a href="#">Home</a></li>
-                                <li><i class="ion-md-arrow-dropright"></i> <a href="#">About us</a></li>
-                                <li><i class="ion-md-arrow-dropright"></i> <a href="#">Our services</a></li>
-                                <li><i class="ion-md-arrow-dropright"></i> <a href="#">Terms & condition</a></li>
-                                <li><i class="ion-md-arrow-dropright"></i> <a href="#">Privacy policy</a></li>
-                            </ul>
-                        </div>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-                        <div class="col-lg-3 col-md-6 footer-contact">
-                            <h4>Contact Us</h4>
-                            <p>
-                                Pune<br>                                
-                                India <br>
-                                <strong>Phone:</strong> +91-7709-525-390<br>
-                                <strong>Email:</strong> info@nikirasoftware.com<br>
-                            </p>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-                            <!-- <div class="social-links">
-                                <a href="#"><i class="ion-logo-twitter"></i></a>
-                                <a href="#"><i class="ion-logo-facebook"></i></a>
-                                <a href="#"><i class="ion-logo-linkedin"></i></a>
-                                <a href="#"><i class="ion-logo-instagram"></i></a>
-                                <a href="#"><i class="ion-logo-googleplus"></i></a>
-                            </div> -->
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.project-card, .blog-card, .about-content');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
 
-                        </div>
+        // Add some interactive effects
+        document.querySelectorAll('.project-card, .blog-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+        });
 
-                        <!-- <div class="col-lg-3 col-md-6 footer-newsletter">
-                            <h4>Subscription</h4>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</p>
-                            <form action="" method="post">
-                                <input type="email" name="email"><input type="submit"  value="Subscribe">
-                            </form>
-                        </div> -->
+        // Typing effect for hero section (optional enhancement)
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="copyright">
-                    &copy; Copyright <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved<br>
-					Template By <a href="https://htmlcodex.com">HTML Codex</a>
-                </div>
-            </div>
-        </footer>
-        <!-- Footer End -->
-
-        <a href="#" class="back-to-top"><i class="ion-md-arrow-dropup"></i></a>
-
-        <!-- Vendor JS Files -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/jquery/jquery-migrate.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/easing/easing.min.js"></script>
-        <script src="vendor/superfish/hoverIntent.js"></script>
-        <script src="vendor/superfish/superfish.min.js"></script>
-        <script src="vendor/waypoints/waypoints.min.js"></script>
-        <script src="vendor/touchSwipe/jquery.touchSwipe.min.js"></script>
-        <script src="vendor/counterup/counterup.min.js"></script>
-        <script src="vendor/owlcarousel/owl.carousel.min.js"></script>
-        <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-        <script src="vendor/lightbox/js/lightbox.min.js"></script>
-
-        <!-- Main Javascript File -->
-        <script src="js/main.js"></script>
-
-    </body>
+        // Initialize typing effect after page load
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                setTimeout(() => {
+                    typeWriter(heroTitle, originalText, 80);
+                }, 1000);
+            }
+        });
+    </script>
+</body>
 </html>

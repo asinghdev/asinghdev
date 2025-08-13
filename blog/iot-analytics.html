@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Data Analytics: From Sensors to Insights - Arvind Singh</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/blog.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">Arvind Singh</a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="blog-post">
+        <article>
+            <header class="post-header">
+                <h1>IoT Data Analytics: From Sensors to Insights</h1>
+                <div class="post-meta">
+                    <time datetime="2024-12-12">December 12, 2024</time>
+                    <span class="read-time">15 min read</span>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <div class="table-of-contents">
+                    <h2>Table of Contents</h2>
+                    <ul>
+                        <li><a href="#context">Context and Background</a></li>
+                        <li><a href="#business-value">Business Value and Use Cases</a></li>
+                        <li><a href="#implementation">Technical Implementation</a>
+                            <ul>
+                                <li><a href="#data-ingestion">Data Ingestion Pipeline</a></li>
+                                <li><a href="#real-time-processing">Real-time Processing</a></li>
+                                <li><a href="#storage">Time-Series Storage</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#architecture">System Architecture</a></li>
+                        <li><a href="#performance">Performance Optimization</a></li>
+                        <li><a href="#security">Security Considerations</a></li>
+                        <li><a href="#reference">Reference Links</a></li>
+                    </ul>
+                </div>
+
+                <h2 id="context">Context and Background</h2>
+                <p>In the era of Industry 4.0, organizations are increasingly relying on IoT devices to collect real-time data and drive operational decisions. The challenge lies in:</p>
+                <ul>
+                    <li>Processing massive volumes of sensor data efficiently</li>
+                    <li>Converting raw data into actionable insights</li>
+                    <li>Managing real-time analytics at scale</li>
+                    <li>Ensuring data reliability and accuracy</li>
+                </ul>
+
+                <h2 id="business-value">Business Value and Use Cases</h2>
+                <div class="business-value-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Use Case</th>
+                                <th>Implementation</th>
+                                <th>Business Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Predictive Maintenance</td>
+                                <td>Real-time equipment monitoring</td>
+                                <td>40% reduction in downtime</td>
+                            </tr>
+                            <tr>
+                                <td>Energy Optimization</td>
+                                <td>Smart consumption analysis</td>
+                                <td>25% reduction in energy costs</td>
+                            </tr>
+                            <tr>
+                                <td>Quality Control</td>
+                                <td>Automated defect detection</td>
+                                <td>60% improvement in quality metrics</td>
+                            </tr>
+                            <tr>
+                                <td>Supply Chain Tracking</td>
+                                <td>Real-time inventory monitoring</td>
+                                <td>30% reduction in stockouts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 id="implementation">Technical Implementation</h2>
+                <pre><code>IoT Devices → IoT Hub → Stream Analytics → 
+Hot Path: Event Hubs → Azure Functions → Real-time Dashboard
+Cold Path: Data Lake → Azure Synapse → Historical Analytics</code></pre>
+
+                <h2>Device-to-Cloud Communication</h2>
+                <p>Example IoT device message structure:</p>
+                <pre><code>{
+  "deviceId": "vending-machine-001",
+  "timestamp": "2025-01-15T10:30:00Z",
+  "location": {
+    "latitude": 18.5204,
+    "longitude": 73.8567,
+    "building": "Tech Park A"
+  },
+  "telemetry": {
+    "temperature": 4.2,
+    "humidity": 45.0,
+    "powerConsumption": 245.5,
+    "vibration": 0.12,
+    "doorOpenCount": 156,
+    "lastServiceDate": "2025-01-10T09:00:00Z"
+  },
+  "inventory": [
+    {"productId": "COLA_001", "quantity": 12, "capacity": 20},
+    {"productId": "WATER_001", "quantity": 8, "capacity": 15}
+  ],
+  "sales": {
+    "totalSalesToday": 23,
+    "revenueToday": 460.00,
+    "lastSaleTime": "2025-01-15T10:15:00Z"
+  }
+}</code></pre>
+
+                <h2>Data Processing Pipeline</h2>
+                <pre><code>public class IoTDataPipeline {
+    private readonly IIoTHubService iotHub;
+    private readonly IStreamAnalytics streamAnalytics;
+    private readonly IDataLakeService dataLake;
+
+    public async Task ProcessTelemetry(DeviceTelemetry telemetry)
+    {
+        // Validate telemetry
+        if (!await ValidateTelemetry(telemetry))
+            return;
+
+        // Process hot path
+        await ProcessHotPath(telemetry);
+
+        // Store in cold path
+        await StoreColdPath(telemetry);
+    }
+
+    private async Task ProcessHotPath(DeviceTelemetry telemetry)
+    {
+        // Enrich telemetry
+        var enriched = await EnrichTelemetry(telemetry);
+
+        // Real-time analytics
+        await streamAnalytics.ProcessTelemetry(enriched);
+
+        // Check for alerts
+        await CheckAlerts(enriched);
+    }
+
+    private async Task StoreColdPath(DeviceTelemetry telemetry)
+    {
+        // Partition data
+        var partition = DeterminePartition(telemetry);
+
+        // Store in Data Lake
+        await dataLake.StoreTelemetry(
+            telemetry,
+            partition
+        );
+    }
+}</code></pre>
+
+                <h2>Stream Processing with Azure Stream Analytics</h2>
+                <pre><code>-- Detect temperature anomalies
+SELECT 
+    deviceId,
+    AVG(temperature) as avgTemp,
+    MAX(temperature) as maxTemp,
+    COUNT(*) as messageCount,
+    System.Timestamp as windowEnd
+INTO temperatureAlerts
+FROM IoTInput TIMESTAMP BY timestamp
+GROUP BY deviceId, TumblingWindow(minute, 5)
+HAVING AVG(temperature) > 8.0 OR AVG(temperature) < 2.0
+
+-- Calculate inventory turnover rates
+WITH InventoryMovement AS (
+    SELECT 
+        deviceId,
+        productId,
+        quantity,
+        LAG(quantity) OVER (
+            PARTITION BY deviceId, productId 
+            ORDER BY timestamp
+        ) as prevQuantity,
+        timestamp
+    FROM IoTInput
+)
+SELECT 
+    deviceId,
+    productId,
+    (prevQuantity - quantity) as unitsSold,
+    timestamp
+INTO salesAnalytics
+FROM InventoryMovement
+WHERE prevQuantity > quantity</code></pre>
+
+                <h2>Time Series Data Management</h2>
+                <pre><code>-- Create hypertable for sensor data
+CREATE TABLE sensor_readings (
+    device_id VARCHAR(50) NOT NULL,
+    timestamp TIMESTAMPTZ NOT NULL,
+    sensor_type VARCHAR(20) NOT NULL,
+    value DOUBLE PRECISION NOT NULL,
+    unit VARCHAR(10),
+    location_id VARCHAR(50),
+    metadata JSONB
+);
+
+-- Convert to hypertable for time-series optimization
+SELECT create_hypertable(
+    'sensor_readings', 
+    'timestamp'
+);
+
+-- Create indexes for common query patterns
+CREATE INDEX idx_device_timestamp 
+    ON sensor_readings (device_id, timestamp DESC);
+CREATE INDEX idx_sensor_type 
+    ON sensor_readings (sensor_type, timestamp DESC);
+
+-- Implement retention policy
+SELECT add_retention_policy(
+    'sensor_readings', 
+    INTERVAL '3 months'
+);</code></pre>
+
+                <h2>Real-time Analytics and Alerting</h2>
+                <pre><code>public class IoTAnomalyDetector {
+    private readonly IMLModel anomalyModel;
+    private readonly IAlertService alertService;
+    private readonly IMetricsCollector metrics;
+
+    public async Task ProcessSensorReading(SensorReading reading)
+    {
+        // Check for anomalies
+        var anomaly = await anomalyModel.Detect(
+            reading.Values,
+            reading.Metadata
+        );
+
+        if (anomaly.IsDetected)
+        {
+            await alertService.RaiseAlert(
+                new Alert {
+                    DeviceId = reading.DeviceId,
+                    Severity = anomaly.Severity,
+                    Message = anomaly.Description,
+                    Timestamp = DateTime.UtcNow
+                }
+            );
+
+            // Track metrics
+            await metrics.TrackAnomaly(
+                reading.DeviceId,
+                anomaly
+            );
+        }
+
+        // Update device status
+        await UpdateDeviceStatus(
+            reading.DeviceId,
+            reading.Values
+        );
+    }
+}</code></pre>
+
+                <h2>Edge Analytics Implementation</h2>
+                <pre><code>public class EdgeAnalytics {
+    private readonly IEdgeDevice device;
+    private readonly ILocalStorage storage;
+    private readonly ICloudSync sync;
+
+    public async Task ProcessAtEdge(SensorData data)
+    {
+        // Local processing
+        var processed = await ProcessLocally(data);
+
+        // Store locally
+        await storage.Store(processed);
+
+        // Sync with cloud when connected
+        if (await sync.IsConnected())
+        {
+            await sync.SyncData(
+                await storage.GetPendingData()
+            );
+        }
+    }
+
+    private async Task&lt;ProcessedData&gt; ProcessLocally(
+        SensorData data)
+    {
+        // Apply local filters
+        var filtered = await ApplyFilters(data);
+
+        // Aggregate data
+        var aggregated = await AggregateData(
+            filtered,
+            TimeSpan.FromMinutes(5)
+        );
+
+        return new ProcessedData {
+            DeviceId = data.DeviceId,
+            AggregatedValues = aggregated,
+            Timestamp = DateTime.UtcNow
+        };
+    }
+}</code></pre>
+
+                <h2>Data Quality and Validation</h2>
+                <pre><code>public class DataValidator {
+    public ValidationResult ValidateSensorReading(
+        SensorReading reading)
+    {
+        var issues = new List&lt;ValidationIssue&gt;();
+
+        // Check timestamp
+        if (reading.Timestamp > DateTime.UtcNow)
+            issues.Add(new ValidationIssue(
+                "Future timestamp detected"
+            ));
+
+        // Validate values
+        foreach (var value in reading.Values)
+        {
+            if (!IsWithinValidRange(value))
+                issues.Add(new ValidationIssue(
+                    $"Value {value.Name} out of range"
+                ));
+        }
+
+        // Check required fields
+        if (string.IsNullOrEmpty(reading.DeviceId))
+            issues.Add(new ValidationIssue(
+                "Missing device ID"
+            ));
+
+        return new ValidationResult {
+            IsValid = !issues.Any(),
+            Issues = issues
+        };
+    }
+}</code></pre>
+
+                <h2>Performance Optimization</h2>
+                <h3>Key Strategies</h3>
+                <ul>
+                    <li>Data partitioning for efficient queries</li>
+                    <li>Caching frequently accessed data</li>
+                    <li>Batch processing for historical analysis</li>
+                    <li>Edge computing for reduced latency</li>
+                </ul>
+
+                <h2>Security Implementation</h2>
+                <h3>Security Measures</h3>
+                <ul>
+                    <li>Device authentication</li>
+                    <li>Data encryption</li>
+                    <li>Network security</li>
+                    <li>Access control</li>
+                </ul>
+
+                <h2 id="reference">Reference Links</h2>
+                <ul>
+                    <li><a href="https://docs.microsoft.com/en-us/azure/iot-hub/">Azure IoT Hub Documentation</a></li>
+                    <li><a href="https://docs.microsoft.com/en-us/azure/stream-analytics/">Azure Stream Analytics</a></li>
+                    <li><a href="https://www.timescale.com/docs/">TimescaleDB Documentation</a></li>
+                    <li><a href="https://docs.microsoft.com/en-us/azure/synapse-analytics/">Azure Synapse Analytics</a></li>
+                    <li><a href="https://docs.microsoft.com/en-us/power-bi/">Power BI Documentation</a></li>
+                    <li><a href="https://docs.microsoft.com/en-us/azure/event-hubs/">Azure Event Hubs</a></li>
+                    <li><a href="https://docs.microsoft.com/en-us/azure/azure-functions/">Azure Functions</a></li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>IoT analytics represents a massive opportunity to transform raw sensor data into business value. The key to success lies in building robust, scalable data pipelines that can handle the unique challenges of IoT data while delivering actionable insights to decision-makers. By following the architecture patterns and implementation strategies outlined above, organizations can create powerful IoT analytics solutions that drive real business value.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Arvind Singh. All rights reserved.</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
