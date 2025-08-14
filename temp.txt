@@ -1,0 +1,31 @@
+                <div class="highlight-box">
+                    <p>I'm a technology leader with 15+ years of experience driving AI-powered, cloud-native, and IoT-enabled solutions that deliver measurable business impact. Currently serving as Lead Consultant at Streben Pty Ltd, I bridge the gap between cutting-edge technology and strategic business value.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1M+</div>
+                        <div class="stat-label">Annual Transactions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Cost Reduction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Enterprise Solutions</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">What I Deliver</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;">🚀 Cloud & AI strategy that accelerates digital transformation</li>
+                        <li style="margin-bottom: 1rem;">💡 Enterprise-grade SaaS & IoT platforms on Azure, optimized for scale & cost</li>
+                        <li style="margin-bottom: 1rem;">👥 Cross-functional leadership that drives delivery excellence</li>
+                    </ul>
+                </div>

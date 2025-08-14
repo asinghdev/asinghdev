@@ -202,13 +202,27 @@
         /* About Section */
         .about {
             background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(37, 99, 235, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            z-index: 0;
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 4rem;
-            align-items: center;
+            align-items: start;
+            position: relative;
+            z-index: 1;
         }
 
         .about-image {
@@ -223,19 +237,88 @@
             color: white;
             margin: 0 auto;
             box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+            transition: transform 0.3s ease;
+        }
+
+        .about-image:hover {
+            transform: translateY(-5px);
         }
 
         .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--text-secondary);
+            display: grid;
+            gap: 2rem;
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         .skills {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 1rem;
             margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .skill-tag {
@@ -561,7 +644,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Hi, I'm Arvind Singh</h1>
-            <p>Lead Consultant | Azure Cloud Expert | .NET & AI/ML Practitioner</p>
+            <p>🚀 AI + Cloud Transformation Leader | Azure Expert | IoT & Industry 4.0 Innovator | Driving Scalable SaaS, Cost Efficiency & Business Impact</p>
             <a href="#projects" class="cta-button">View My Work</a>
         </div>
     </section>
@@ -572,7 +655,37 @@
             <div class="about-image">👨‍💻</div>
             <div>
                 <div class="about-text">
-                    <p>I'm a highly accomplished technology leader with 15+ years of comprehensive experience in software product and service delivery. I specialize in driving innovative solutions through strategic application design and development, with deep expertise in cloud technologies and team leadership.</p>
+                <div class="highlight-box">
+                    <p>I'm a technology leader with 15+ years of experience driving AI-powered, cloud-native, and IoT-enabled solutions that deliver measurable business impact. Currently serving as Lead Consultant at Streben Pty Ltd, I bridge the gap between cutting-edge technology and strategic business value.</p>
+                </div>               
+
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">What I Deliver</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;">🚀 Cloud & AI strategy that accelerates digital transformation</li>
+                        <li style="margin-bottom: 1rem;">💡 Enterprise-grade SaaS & IoT platforms on Azure, optimized for scale & cost</li>
+                        <li style="margin-bottom: 1rem;">👥 Cross-functional leadership that drives delivery excellence</li>
+                    </ul>
+                </div>
+                    <p>I’m a technology leader with 15+ years of experience driving AI-powered, cloud-native, and IoT-enabled solutions that deliver measurable business impact.
+
+                        My journey has taken me from building high-volume SaaS platforms to designing industrial IoT systems that turn raw data into actionable intelligence. 
+                        
+                    </p>   
+                    <p>Along the way, I’ve led cross-functional teams across India, Australia, and global GCCs — bridging the gap between cutting-edge technology and strategic business value.</p>
+
+                    <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+                        <li><strong>What I deliver:</strong></li>
+                        <li>Cloud & AI strategy that accelerates digital transformation.</li>
+                        <li>Enterprise-grade SaaS & IoT platforms on Azure, optimized for scale & cost.</li>
+                        <li>Cross-functional leadership that drives delivery excellence.</li>
+                        <li><strong>Proven wins:</strong></li>
+                        <li>40% operational cost reduction via cloud resource optimization.</li>
+                        <li>Built and scaled AI-ready vending platform powering 1M+ annual transactions.</li>
+                        <li>Delivered industrial IoT platforms enabling predictive analytics for energy & manufacturing.</li>
+                        <li><strong>Credentials & Tools:</strong> Azure Cloud Expert | Certified Scrum Master | IBM AI Product Manager | IoT Solutions Architect | AI/ML Practitioner | Agentic AI | Automation Workflows (n8n, Zapier, MCP)</li>
+                    </ul>
+                    <p>I help enterprises and forward-thinking startups harness AI, cloud, and connected systems to transform operations, boost revenue, and create new business models.</p>
                     <p>Currently serving as Lead Consultant at Streben Pty Ltd, I've designed and developed comprehensive cloud-based SaaS platforms that process over 1 million sales annually, helping businesses reduce operational costs by 40% through cloud resource optimization.</p>
                 </div>
                 <div class="skills">
@@ -597,91 +710,108 @@
         <div class="section-title">My Projects</div>
         <div class="projects-grid">
             <div class="project-card">
-                <div class="project-image">🏪</div>
-                <div class="project-content">
-                    <h3 class="project-title">Cloud-based Vending Management SaaS</h3>
-                    <p class="project-description">Comprehensive cloud platform revolutionizing vending operations management with high-volume transaction processing. Handles 1M+ sales annually and reduced operational costs by 40%.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Azure</span>
-                        <span class="project-tag">C#/.NET</span>
-                        <span class="project-tag">ASP.NET Core</span>
-                        <span class="project-tag">Azure SQL</span>
-                        <span class="project-tag">IoT Hub</span>
+                <a href="projects/vending-management.html" style="text-decoration: none; color: inherit;">
+                    <div class="project-image">🏪</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Cloud-based Vending Management SaaS</h3>
+                        <p class="project-description">Comprehensive cloud platform revolutionizing vending operations management with high-volume transaction processing. Handles 1M+ sales annually and reduced operational costs by 40%.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Azure</span>
+                            <span class="project-tag">C#/.NET</span>
+                            <span class="project-tag">ASP.NET Core</span>
+                            <span class="project-tag">Azure SQL</span>
+                            <span class="project-tag">IoT Hub</span>
+                        </div>
+                        <span class="blog-link">Read Case Study ⟶</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="project-card">
-                <div class="project-image">⚡</div>
-                <div class="project-content">
-                    <h3 class="project-title">Energy Monitoring IoT Solution</h3>
-                    <p class="project-description">Advanced energy monitoring platform for US energy corporation with real-time data analytics, predictive maintenance, and intelligent resource optimization capabilities.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">IoT</span>
-                        <span class="project-tag">Python</span>
-                        <span class="project-tag">TimescaleDB</span>
-                        <span class="project-tag">Azure Functions</span>
-                        <span class="project-tag">React</span>
+                <a href="projects/energy-monitoring.html" style="text-decoration: none; color: inherit;">
+                    <div class="project-image">⚡</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Energy Monitoring IoT Solution</h3>
+                        <p class="project-description">Advanced energy monitoring platform for US energy corporation with real-time data analytics, predictive maintenance, and intelligent resource optimization capabilities.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">IoT</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">TimescaleDB</span>
+                            <span class="project-tag">Azure Functions</span>
+                            <span class="project-tag">React</span>
+                        </div>
+                        <span class="blog-link">Read Case Study ⟶</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="project-card">
-                <div class="project-image">⛏️</div>
-                <div class="project-content">
-                    <h3 class="project-title">Mining Equipment Marketplace</h3>
-                    <p class="project-description">Cloud-based inventory management platform connecting equipment manufacturers, sellers, and mine owners through intelligent vending machine deployment systems.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Cloud Architecture</span>
-                        <span class="project-tag">.NET Core</span>
-                        <span class="project-tag">Marketplace API</span>
-                        <span class="project-tag">IoT Integration</span>
+                <a href="projects/mining-marketplace.html" style="text-decoration: none; color: inherit;">
+                    <div class="project-image">⛏️</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Mining Equipment Marketplace</h3>
+                        <p class="project-description">Cloud-based inventory management platform connecting equipment manufacturers, sellers, and mine owners through intelligent vending machine deployment systems.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Cloud Architecture</span>
+                            <span class="project-tag">.NET Core</span>
+                            <span class="project-tag">Marketplace API</span>
+                            <span class="project-tag">IoT Integration</span>
+                        </div>
+                        <span class="blog-link">Read Case Study ⟶</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="project-card">
-                <div class="project-image">🎓</div>
-                <div class="project-content">
-                    <h3 class="project-title">K-12 EdTech Learning Platform</h3>
-                    <p class="project-description">Comprehensive Learning Management System supporting curriculum access, digital classrooms, and self-paced learning workflows for educational institutions.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">LMS</span>
-                        <span class="project-tag">React</span>
-                        <span class="project-tag">Node.js</span>
-                        <span class="project-tag">PostgreSQL</span>
-                        <span class="project-tag">Education Tech</span>
+                <a href="projects/edtech-platform.html" style="text-decoration: none; color: inherit;">
+                    <div class="project-image">🎓</div>
+                    <div class="project-content">
+                        <h3 class="project-title">K-12 EdTech Learning Platform</h3>
+                        <p class="project-description">Comprehensive Learning Management System supporting curriculum access, digital classrooms, and self-paced learning workflows for educational institutions.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">LMS</span>
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">PostgreSQL</span>
+                            <span class="project-tag">Education Tech</span>
+                        </div>
+                        <span class="blog-link">Read Case Study ⟶</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="project-card">
-                <div class="project-image">💳</div>
-                <div class="project-content">
-                    <h3 class="project-title">Payment Gateway Optimization</h3>
-                    <p class="project-description">Advanced payment processing system with pattern analysis that saved $1M+ by optimizing transaction flows and implementing ISO8583 standards.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Payment Systems</span>
-                        <span class="project-tag">ISO8583</span>
-                        <span class="project-tag">Pattern Analysis</span>
-                        <span class="project-tag">FinTech</span>
+                <a href="projects/payment-gateway.html" style="text-decoration: none; color: inherit;">
+                    <div class="project-image">💳</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Payment Gateway Optimization</h3>
+                        <p class="project-description">Advanced payment processing system with pattern analysis that saved $1M+ by optimizing transaction flows and implementing ISO8583 standards.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Payment Systems</span>
+                            <span class="project-tag">ISO8583</span>
+                            <span class="project-tag">Pattern Analysis</span>
+                            <span class="project-tag">FinTech</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="project-card">
-                <div class="project-image">🤖</div>
-                <div class="project-content">
-                    <h3 class="project-title">AI-Powered Business Intelligence</h3>
-                    <p class="project-description">Enterprise AI/ML platform combining IoT data with advanced analytics to transform operational data into actionable business intelligence using modern AI agents.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">AI/ML</span>
-                        <span class="project-tag">Agentic AI</span>
-                        <span class="project-tag">Azure ML</span>
-                        <span class="project-tag">Python</span>
-                        <span class="project-tag">OpenAI</span>
+                <a href="projects/ai-business-intelligence.html" style="text-decoration: none; color: inherit;">
+                    <div class="project-image">🤖</div>
+                    <div class="project-content">
+                        <h3 class="project-title">AI-Powered Business Intelligence</h3>
+                        <p class="project-description">Enterprise AI/ML platform combining IoT data with advanced analytics to transform operational data into actionable business intelligence using modern AI agents.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AI/ML</span>
+                            <span class="project-tag">Agentic AI</span>
+                            <span class="project-tag">Azure ML</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">OpenAI</span>
+                        </div>
+                        <span class="blog-link">Read Case Study ⟶</span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -696,7 +826,7 @@
                         <div class="blog-date">August 13, 2025</div>
                         <h3 class="blog-title">Intelligent Content Flagging with Azure Vision API</h3>
                         <p class="blog-excerpt">Building a real-time content monitoring system using Azure Vision API and OpenCV for automated content flagging, text recognition, and screen capture analysis...</p>
-                        <span class="blog-link">Read More</span>
+                        <span class="blog-link">Read More ⟶</span>
                     </div>
                 </a>
             </article>
@@ -708,7 +838,7 @@
                         <div class="blog-date">January 15, 2025</div>
                         <h3 class="blog-title">Agentic AI in Enterprise: Beyond Chatbots</h3>
                         <p class="blog-excerpt">Exploring how autonomous AI agents are revolutionizing business processes, from intelligent automation to decision-making systems that learn and adapt...</p>
-                        <span class="blog-link">Read More</span>
+                        <span class="blog-link">Read More ⟶</span>
                     </div>
                 </a>
             </article>
@@ -780,22 +910,7 @@
         <div class="contact-content">
             <p>I'm always interested in new opportunities and innovative projects. Based in Pune, India, available for remote consultations worldwide.</p>
             
-            <form class="contact-form" onsubmit="handleFormSubmit(event)">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell me about your project or how I can help..." required></textarea>
-                </div>
-                <button type="submit" class="submit-button">Send Message</button>
-            </form>
-
+            
             <div class="contact-info" style="text-align: center; margin: 2rem 0; color: var(--text-secondary);">
                 <p>📧 <a href="mailto:arvind.singh.agra@gmail.com" style="color: var(--primary-color);">arvind.singh.agra@gmail.com</a></p>
                 <p>📱 <a href="tel:+917709525390" style="color: var(--primary-color);">+91 7709525390</a></p>
