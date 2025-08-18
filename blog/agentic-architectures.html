@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecting Agentic AI Systems: Patterns and Implementation - Arvind Singh</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            white-space: pre;
+            font-family: monospace;
+            line-height: 1.2;
+            overflow-x: auto;
+        }
+        
+        .implementation-example {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .pattern-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html#home" class="logo">Arvind Singh</a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <article class="blog-post">
+        <div class="blog-header">
+            <h1>Architecting Agentic AI Systems: Patterns and Implementation</h1>
+            <div class="blog-meta">
+                <span class="date">August 18, 2025</span>
+                <span class="author">By Arvind Singh</span>
+            </div>
+        </div>
+
+        <div class="blog-content">
+            <h2>Introduction</h2>
+            <p>As AI systems evolve from simple input-output models to autonomous agents capable of complex decision-making, the architecture patterns we use must evolve as well. This article explores different architectural approaches for building agentic AI systems, with practical examples and implementation patterns.</p>
+
+            <h2>1. Reactive Agent Architecture</h2>
+            <p>The simplest form of agentic system, suitable for straightforward stimulus-response scenarios.</p>
+
+            <div class="architecture-diagram">
+                [Environment] → [Sensor] → [Rules Engine] → [Action Selector] → [Actuator]
+                                         ↑
+                               [Rule Knowledge Base]
+
+Components:
+- Sensor: Perceives environment state
+- Rules Engine: Matches current state to rules
+- Action Selector: Chooses appropriate response
+- Actuator: Executes selected action</div>
+
+            <div class="implementation-example">
+                <h4>C# Implementation Example:</h4>
+                <pre><code>public class ReactiveAgent {
+    private readonly IRulesEngine _rulesEngine;
+    private readonly IActionSelector _actionSelector;
+    private readonly IActuator _actuator;
+
+    public async Task ProcessInput(EnvironmentState state) {
+        // Match state against rules
+        var applicableRules = await _rulesEngine
+            .MatchRules(state);
+
+        // Select best action based on rules
+        var action = await _actionSelector
+            .SelectAction(applicableRules);
+
+        // Execute the action
+        await _actuator.Execute(action);
+    }
+}
+
+// Example Rule Implementation
+public class AutoscalingRule : IAgentRule {
+    public bool Matches(EnvironmentState state) {
+        return state.CpuUtilization > 80 ||
+               state.ResponseTime > TimeSpan
+                   .FromSeconds(2);
+    }
+
+    public AgentAction GetAction() {
+        return new ScaleOutAction {
+            InstanceCount = 1,
+            Priority = Priority.High
+        };
+    }
+}</code></pre>
+
+                <h4>Python Implementation Example:</h4>
+                <pre><code>from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import List, Optional
+import asyncio
+from azure.monitor import MonitorClient
+from azure.mgmt.compute import ComputeManagementClient
+
+@dataclass
+class EnvironmentState:
+    cpu_utilization: float
+    response_time: float
+    memory_usage: float
+    request_count: int
+
+@dataclass
+class AgentAction:
+    action_type: str
+    parameters: dict
+    priority: str
+
+class Rule(ABC):
+    @abstractmethod
+    def matches(self, state: EnvironmentState) -> bool:
+        pass
+
+    @abstractmethod
+    def get_action(self) -> AgentAction:
+        pass
+
+class AutoscalingRule(Rule):
+    def matches(self, state: EnvironmentState) -> bool:
+        return (state.cpu_utilization > 80 or
+                state.response_time > 2.0)
+
+    def get_action(self) -> AgentAction:
+        return AgentAction(
+            action_type="scale_out",
+            parameters={"instance_count": 1},
+            priority="high"
+        )
+
+class ReactiveAgent:
+    def __init__(self, monitor_client: MonitorClient,
+                 compute_client: ComputeManagementClient):
+        self.rules: List[Rule] = []
+        self.monitor_client = monitor_client
+        self.compute_client = compute_client
+
+    async def add_rule(self, rule: Rule):
+        self.rules.append(rule)
+
+    async def match_rules(self, state: EnvironmentState) -> List[Rule]:
+        return [rule for rule in self.rules if rule.matches(state)]
+
+    async def select_action(self, rules: List[Rule]) -> Optional[AgentAction]:
+        if not rules:
+            return None
+        # Select highest priority action
+        return max(rules, key=lambda r: 
+            {"high": 3, "medium": 2, "low": 1}[r.get_action().priority]
+        ).get_action()
+
+    async def execute_action(self, action: AgentAction):
+        if action.action_type == "scale_out":
+            await self.scale_out(**action.parameters)
+
+    async def scale_out(self, instance_count: int):
+        # Implementation using Azure Compute Management client
+        try:
+            resource_group = "myResourceGroup"
+            vmss_name = "myVMSS"
+            
+            vmss = await self.compute_client.virtual_machine_scale_sets.get(
+                resource_group, vmss_name)
+            
+            current_capacity = vmss.sku.capacity
+            new_capacity = current_capacity + instance_count
+            
+            vmss.sku.capacity = new_capacity
+            await self.compute_client.virtual_machine_scale_sets.create_or_update(
+                resource_group, vmss_name, vmss)
+            
+        except Exception as e:
+            print(f"Scale out operation failed: {e}")
+
+    async def process_input(self, state: EnvironmentState):
+        # Match state against rules
+        applicable_rules = await self.match_rules(state)
+        
+        # Select best action based on rules
+        action = await self.select_action(applicable_rules)
+        
+        # Execute the action if one was selected
+        if action:
+            await self.execute_action(action)
+
+# Usage example
+async def main():
+    # Initialize Azure clients
+    monitor_client = MonitorClient(
+        credential=DefaultAzureCredential(),
+        subscription_id="your-subscription-id"
+    )
+    compute_client = ComputeManagementClient(
+        credential=DefaultAzureCredential(),
+        subscription_id="your-subscription-id"
+    )
+    
+    # Create and configure agent
+    agent = ReactiveAgent(monitor_client, compute_client)
+    await agent.add_rule(AutoscalingRule())
+    
+    # Monitor and react to environment
+    while True:
+        state = EnvironmentState(
+            cpu_utilization=await get_cpu_utilization(),
+            response_time=await get_response_time(),
+            memory_usage=await get_memory_usage(),
+            request_count=await get_request_count()
+        )
+        
+        await agent.process_input(state)
+        await asyncio.sleep(60)  # Check every minute
+
+if __name__ == "__main__":
+    asyncio.run(main())</code></pre>
+            </div>
+
+            <h2>2. BDI (Beliefs-Desires-Intentions) Architecture</h2>
+            <p>A more sophisticated pattern that maintains internal state and goals, suitable for complex decision-making scenarios.</p>
+
+            <div class="architecture-diagram">
+                                [Beliefs]
+                                   ↓
+[Sensor] → [Belief Updater] → [Deliberator] → [Intention Selector] → [Actuator]
+                                   ↑              ↑
+                              [Desires]     [Intentions]
+                                   ↑
+                              [Goal Base]
+
+Components:
+- Beliefs: Current world model
+- Desires: Long-term goals
+- Intentions: Current action plans
+- Deliberator: Decides next actions
+- Intention Selector: Chooses between competing plans</div>
+
+            <div class="implementation-example">
+                <h4>C# Implementation Example:</h4>
+                <pre><code>public class BDIAgent {
+    private readonly IBeliefBase _beliefs;
+    private readonly IDesireBase _desires;
+    private readonly IIntentionBase _intentions;
+    private readonly IDeliberator _deliberator;
+
+    public async Task UpdateAndAct(
+        EnvironmentPerception perception) 
+    {
+        // Update beliefs based on new perception
+        await _beliefs.Update(perception);
+
+        // Generate possible intentions
+        var options = await _deliberator
+            .GenerateOptions(_beliefs, _desires);
+
+        // Filter and select best intention
+        var selectedIntention = await _intentions
+            .SelectBestIntention(options);
+
+        // Execute the intention
+        await ExecuteIntention(selectedIntention);
+    }
+}
+
+// Example BDI Implementation for Cloud Resource Management
+public class CloudResourceManager : BDIAgent {
+    public class Beliefs {
+        public Dictionary<string, ResourceMetrics> 
+            ResourceState { get; set; }
+        public Dictionary<string, CostMetrics> 
+            CostData { get; set; }
+        public List<Constraint> 
+            SystemConstraints { get; set; }
+    }
+
+    public class Desires {
+        public PerformanceGoals Performance { get; set; }
+        public CostGoals Costs { get; set; }
+        public ReliabilityGoals Reliability { get; set; }
+    }
+
+    public class Intentions {
+        public async Task<ActionPlan> 
+            OptimizeResources() {
+            return new ActionPlan {
+                Actions = new List<AgentAction> {
+                    new AnalyzeResourceUtilization(),
+                    new PredictFutureNeeds(),
+                    new AdjustResourceAllocation()
+                }
+            };
+        }
+    }
+}</code></pre>
+
+                <h4>Python Implementation Example:</h4>
+                <pre><code>from dataclasses import dataclass
+from typing import Dict, List, Optional
+from datetime import datetime
+import asyncio
+from azure.mgmt.monitor import MonitorManagementClient
+from azure.ai.ml import MLClient
+from azure.identity import DefaultAzureCredential
+
+@dataclass
+class ResourceMetrics:
+    cpu_usage: float
+    memory_usage: float
+    network_throughput: float
+    last_updated: datetime
+
+@dataclass
+class CostMetrics:
+    hourly_cost: float
+    daily_cost: float
+    projected_monthly: float
+    last_updated: datetime
+
+@dataclass
+class Constraint:
+    metric: str
+    min_value: float
+    max_value: float
+    priority: int
+
+@dataclass
+class PerformanceGoals:
+    max_response_time: float
+    min_throughput: int
+    max_cpu_usage: float
+    max_memory_usage: float
+
+@dataclass
+class CostGoals:
+    max_hourly_cost: float
+    max_daily_cost: float
+    max_monthly_cost: float
+
+@dataclass
+class ReliabilityGoals:
+    min_availability: float
+    max_error_rate: float
+    max_recovery_time: float
+
+class BeliefBase:
+    def __init__(self):
+        self.resource_state: Dict[str, ResourceMetrics] = {}
+        self.cost_data: Dict[str, CostMetrics] = {}
+        self.constraints: List[Constraint] = []
+        
+    async def update(self, perception: dict):
+        # Update resource state
+        for resource_id, metrics in perception.get('resources', {}).items():
+            self.resource_state[resource_id] = ResourceMetrics(**metrics)
+            
+        # Update cost data
+        for resource_id, costs in perception.get('costs', {}).items():
+            self.cost_data[resource_id] = CostMetrics(**costs)
+
+class DesireBase:
+    def __init__(self):
+        self.performance = PerformanceGoals(
+            max_response_time=0.5,
+            min_throughput=1000,
+            max_cpu_usage=80.0,
+            max_memory_usage=85.0
+        )
+        self.costs = CostGoals(
+            max_hourly_cost=10.0,
+            max_daily_cost=200.0,
+            max_monthly_cost=5000.0
+        )
+        self.reliability = ReliabilityGoals(
+            min_availability=99.9,
+            max_error_rate=0.1,
+            max_recovery_time=300
+        )
+
+class Intention:
+    def __init__(self, name: str, priority: int, actions: List[dict]):
+        self.name = name
+        self.priority = priority
+        self.actions = actions
+
+class IntentionBase:
+    def __init__(self):
+        self.current_intentions: List[Intention] = []
+        
+    async def select_best_intention(self, options: List[Intention]) -> Optional[Intention]:
+        if not options:
+            return None
+        return max(options, key=lambda x: x.priority)
+
+class BDIAgent:
+    def __init__(self, monitor_client: MonitorManagementClient,
+                 ml_client: MLClient):
+        self.beliefs = BeliefBase()
+        self.desires = DesireBase()
+        self.intentions = IntentionBase()
+        self.monitor_client = monitor_client
+        self.ml_client = ml_client
+
+    async def update_and_act(self, perception: dict):
+        # Update beliefs based on new perception
+        await self.beliefs.update(perception)
+        
+        # Generate possible intentions
+        options = await self.generate_options()
+        
+        # Select best intention
+        selected_intention = await self.intentions.select_best_intention(options)
+        
+        if selected_intention:
+            await self.execute_intention(selected_intention)
+
+    async def generate_options(self) -> List[Intention]:
+        options = []
+        
+        # Check resource optimization needs
+        if await self.needs_resource_optimization():
+            options.append(Intention(
+                name="optimize_resources",
+                priority=3,
+                actions=[
+                    {
+                        "type": "analyze_utilization",
+                        "params": {"timeframe": "1h"}
+                    },
+                    {
+                        "type": "predict_needs",
+                        "params": {"horizon": "24h"}
+                    },
+                    {
+                        "type": "adjust_allocation",
+                        "params": {"mode": "adaptive"}
+                    }
+                ]
+            ))
+
+        # Check cost optimization needs
+        if await self.needs_cost_optimization():
+            options.append(Intention(
+                name="optimize_costs",
+                priority=2,
+                actions=[
+                    {
+                        "type": "identify_waste",
+                        "params": {"min_savings": 100}
+                    },
+                    {
+                        "type": "recommend_sizing",
+                        "params": {"strategy": "cost_effective"}
+                    }
+                ]
+            ))
+
+        return options
+
+    async def needs_resource_optimization(self) -> bool:
+        for resource_id, metrics in self.beliefs.resource_state.items():
+            if (metrics.cpu_usage > self.desires.performance.max_cpu_usage or
+                metrics.memory_usage > self.desires.performance.max_memory_usage):
+                return True
+        return False
+
+    async def needs_cost_optimization(self) -> bool:
+        total_hourly_cost = sum(
+            cost.hourly_cost 
+            for cost in self.beliefs.cost_data.values()
+        )
+        return total_hourly_cost > self.desires.costs.max_hourly_cost
+
+    async def execute_intention(self, intention: Intention):
+        for action in intention.actions:
+            try:
+                if action["type"] == "analyze_utilization":
+                    await self.analyze_resource_utilization(**action["params"])
+                elif action["type"] == "predict_needs":
+                    await self.predict_future_needs(**action["params"])
+                elif action["type"] == "adjust_allocation":
+                    await self.adjust_resource_allocation(**action["params"])
+            except Exception as e:
+                print(f"Failed to execute action {action['type']}: {e}")
+
+    async def analyze_resource_utilization(self, timeframe: str):
+        # Implementation using Azure Monitor
+        pass
+
+    async def predict_future_needs(self, horizon: str):
+        # Implementation using Azure ML
+        pass
+
+    async def adjust_resource_allocation(self, mode: str):
+        # Implementation using Azure Compute
+        pass
+
+# Usage example
+async def main():
+    credential = DefaultAzureCredential()
+    subscription_id = "your-subscription-id"
+    
+    monitor_client = MonitorManagementClient(
+        credential=credential,
+        subscription_id=subscription_id
+    )
+    
+    ml_client = MLClient(
+        credential=credential,
+        subscription_id=subscription_id,
+        resource_group="your-resource-group",
+        workspace_name="your-workspace"
+    )
+    
+    agent = BDIAgent(monitor_client, ml_client)
+    
+    while True:
+        # Gather current environment perception
+        perception = {
+            "resources": {
+                "webapp-1": {
+                    "cpu_usage": 75.5,
+                    "memory_usage": 82.3,
+                    "network_throughput": 150.0,
+                    "last_updated": datetime.now()
+                }
+            },
+            "costs": {
+                "webapp-1": {
+                    "hourly_cost": 8.5,
+                    "daily_cost": 180.0,
+                    "projected_monthly": 4800.0,
+                    "last_updated": datetime.now()
+                }
+            }
+        }
+        
+        await agent.update_and_act(perception)
+        await asyncio.sleep(300)  # Run every 5 minutes
+
+if __name__ == "__main__":
+    asyncio.run(main())</code></pre>
+            </div>
+
+            <h2>3. Hierarchical Task Network (HTN) Architecture</h2>
+            <p>Ideal for complex task decomposition and planning scenarios.</p>
+
+            <div class="architecture-diagram">
+                [Goal] → [Task Decomposer] → [Task Network]
+                             ↓                     ↓
+                    [Primitive Tasks] ← [Task Executor]
+                             ↓
+                        [Actuator]
+
+Components:
+- Task Decomposer: Breaks down complex tasks
+- Task Network: Maintains task dependencies
+- Primitive Tasks: Basic executable actions
+- Task Executor: Manages task execution flow</div>
+
+            <div class="implementation-example">
+                <h4>Implementation Example:</h4>
+                <pre><code>public class HTNAgent {
+    private readonly ITaskDecomposer _decomposer;
+    private readonly ITaskNetwork _network;
+    private readonly ITaskExecutor _executor;
+
+    public async Task ExecuteGoal(AgentGoal goal) {
+        // Decompose goal into task hierarchy
+        var taskNetwork = await _decomposer
+            .DecomposeGoal(goal);
+
+        // Create execution plan
+        var executionPlan = await _network
+            .CreateExecutionPlan(taskNetwork);
+
+        // Execute primitive tasks
+        await _executor.ExecutePlan(executionPlan);
+    }
+}
+
+// Example HTN Implementation for Deployment Pipeline
+public class DeploymentOrchestrator : HTNAgent {
+    public class DeploymentTask : ITask {
+        public async Task<TaskNetwork> Decompose() {
+            return new TaskNetwork {
+                Tasks = new List<ITask> {
+                    new ValidateInfrastructure(),
+                    new PrepareResources(),
+                    new DeployApplication(),
+                    new VerifyDeployment()
+                },
+                Dependencies = new Dictionary<
+                    string, List<string>> {
+                    ["DeployApplication"] = new() {
+                        "ValidateInfrastructure",
+                        "PrepareResources"
+                    },
+                    ["VerifyDeployment"] = new() {
+                        "DeployApplication"
+                    }
+                }
+            };
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h2>4. Learning Agent Architecture</h2>
+            <p>Incorporates continuous learning and adaptation capabilities.</p>
+
+            <div class="architecture-diagram">
+                [Environment] → [Sensor] → [Performance Element] → [Actuator]
+                                ↑              ↑
+                         [Critic] ← [Learning Element]
+                                         ↑
+                                  [Knowledge Base]
+
+Components:
+- Performance Element: Makes decisions
+- Learning Element: Updates knowledge
+- Critic: Evaluates performance
+- Knowledge Base: Stores learned patterns</div>
+
+            <div class="implementation-example">
+                <h4>Implementation Example:</h4>
+                <pre><code>public class LearningAgent {
+    private readonly IPerformanceElement _performer;
+    private readonly ILearningElement _learner;
+    private readonly ICritic _critic;
+    private readonly IKnowledgeBase _knowledge;
+
+    public async Task ProcessAndLearn(
+        EnvironmentState state) 
+    {
+        // Make decision and act
+        var action = await _performer
+            .DecideAction(state);
+        var result = await ExecuteAction(action);
+
+        // Evaluate performance
+        var feedback = await _critic
+            .EvaluateAction(state, action, result);
+
+        // Learn from experience
+        await _learner.Learn(
+            state, action, result, feedback);
+
+        // Update knowledge base
+        await _knowledge.Update(
+            new Experience(state, action, result));
+    }
+}
+
+// Example Learning Agent for Resource Optimization
+public class ResourceOptimizer : LearningAgent {
+    public class PerformanceMetrics {
+        public double ResponseTime { get; set; }
+        public double CostPerRequest { get; set; }
+        public double ResourceUtilization { get; set; }
+    }
+
+    public class OptimizationAction {
+        public ResourceType Resource { get; set; }
+        public int Quantity { get; set; }
+        public TimeSpan Duration { get; set; }
+    }
+
+    public class LearningStrategy {
+        private readonly IReinforcementLearner _rl;
+
+        public async Task<OptimizationAction> 
+            LearnAndRecommend(
+                PerformanceMetrics metrics) 
+        {
+            var state = ConvertToState(metrics);
+            var action = await _rl
+                .GetNextAction(state);
+            
+            return ConvertToAction(action);
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h2>5. Multi-Agent Architecture</h2>
+            <p>Distributed architecture for complex systems requiring multiple specialized agents.</p>
+
+            <div class="architecture-diagram">
+                [Coordinator Agent]
+                     ↓    ↓    ↓
+         [Agent 1] [Agent 2] [Agent 3]
+             ↓         ↓         ↓
+    [Specialized  [Specialized  [Specialized
+     Domain 1]     Domain 2]     Domain 3]
+
+Components:
+- Coordinator: Manages agent interactions
+- Specialized Agents: Domain-specific handlers
+- Communication Protocol: Inter-agent messaging
+- Conflict Resolution: Handles competing goals</div>
+
+            <div class="implementation-example">
+                <h4>Implementation Example:</h4>
+                <pre><code>public class MultiAgentSystem {
+    private readonly ICoordinatorAgent _coordinator;
+    private readonly Dictionary<string, IAgent> 
+        _agents;
+    private readonly IMessageBus _messageBus;
+
+    public async Task ProcessDistributedTask(
+        SystemTask task) 
+    {
+        // Decompose task for distribution
+        var subtasks = await _coordinator
+            .DecomposeTask(task);
+
+        // Assign subtasks to specialized agents
+        var assignments = await _coordinator
+            .AssignTasks(subtasks, _agents);
+
+        // Execute in parallel with coordination
+        await Task.WhenAll(
+            assignments.Select(a => 
+                ExecuteAssignment(a)));
+    }
+}
+
+// Example Multi-Agent System for Cloud Operations
+public class CloudOpsSystem : MultiAgentSystem {
+    public class Agents {
+        public SecurityAgent Security { get; set; }
+        public PerformanceAgent Performance { get; set; }
+        public CostOptimizationAgent Cost { get; set; }
+        public ComplianceAgent Compliance { get; set; }
+    }
+
+    public class CoordinationStrategy {
+        public async Task<DecisionResult> 
+            CoordinateDecision(
+                Dictionary<string, AgentProposal> 
+                    proposals) 
+        {
+            // Weight and combine agent proposals
+            var weightedResults = proposals
+                .Select(p => WeightProposal(p))
+                .ToList();
+
+            // Resolve conflicts
+            var finalDecision = ResolveConflicts(
+                weightedResults);
+
+            return finalDecision;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h2>Best Practices and Considerations</h2>
+            <ul>
+                <li><strong>Pattern Selection:</strong> Choose architecture based on task complexity and requirements</li>
+                <li><strong>Scalability:</strong> Design for horizontal scaling from the start</li>
+                <li><strong>Monitoring:</strong> Implement comprehensive observability</li>
+                <li><strong>Error Handling:</strong> Build robust recovery mechanisms</li>
+                <li><strong>Testing:</strong> Create simulation environments for agent testing</li>
+            </ul>
+
+            <h2>Azure Implementation Notes</h2>
+            <div class="implementation-example">
+                <h4>Recommended Azure Services:</h4>
+                <pre><code>1. Compute Options:
+   - Azure Kubernetes Service (AKS)
+   - Azure Container Apps
+   - Azure Functions Premium
+
+2. Storage & State:
+   - Cosmos DB for agent state
+   - Azure Cache for Redis
+   - Azure Storage for logs
+
+3. Communication:
+   - Event Hub for real-time events
+   - Service Bus for task distribution
+   - API Management for external interfaces
+
+4. Monitoring:
+   - Application Insights
+   - Azure Monitor
+   - Log Analytics
+
+5. AI/ML Integration:
+   - Azure OpenAI Service
+   - Azure Machine Learning
+   - Cognitive Services</code></pre>
+            </div>
+
+            <h2>Conclusion</h2>
+            <p>Building effective agentic AI systems requires careful consideration of architecture patterns and implementation approaches. Each pattern has its strengths and ideal use cases. The key is matching the right pattern to your specific requirements while maintaining flexibility for future evolution.</p>
+
+            <div class="next-steps">
+                <h3>Further Reading</h3>
+                <ul>
+                    <li><a href="#">Implementing Agentic AI on Azure</a></li>
+                    <li><a href="#">Performance Optimization for AI Agents</a></li>
+                    <li><a href="#">Multi-Agent Systems in Practice</a></li>
+                </ul>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <p>&copy; 2025 Arvind Singh. All rights reserved.</p>
+    </footer>
+
+    <script src="../assets/js/blog.js"></script>
+</body>
+</html>
