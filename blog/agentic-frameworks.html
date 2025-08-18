@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparing Popular Agentic Frameworks - Arvind Singh</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html#home" class="logo">Arvind Singh</a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <article class="blog-post">
+        <div class="blog-header">
+            <h1>Comparing Popular Agentic Frameworks: A Developer's Guide</h1>
+            <div class="blog-meta">
+                <span class="date">Feb 15, 2025</span>
+                <span class="author">By Arvind Singh</span>
+            </div>
+        </div>
+
+        <div class="blog-content">
+            <h2>Introduction</h2>
+            <p>As AI development evolves, agentic frameworks have become essential tools for building sophisticated AI applications. This comprehensive guide compares the most popular frameworks, helping developers make informed decisions for their projects.</p>
+
+            <h2>Framework Comparison</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>LangChain</th>
+                            <th>AutoGPT</th>
+                            <th>CrewAI</th>
+                            <th>Semantic Kernel</th>
+                            <th>AgentLLM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Primary Language</strong></td>
+                            <td>Python, JavaScript</td>
+                            <td>Python</td>
+                            <td>Python</td>
+                            <td>C#, Python, Java</td>
+                            <td>Python</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learning Curve</strong></td>
+                            <td>Moderate to Steep</td>
+                            <td>Moderate</td>
+                            <td>Gentle</td>
+                            <td>Moderate</td>
+                            <td>Gentle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enterprise Readiness</strong></td>
+                            <td>High</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Community Size</strong></td>
+                            <td>Very Large</td>
+                            <td>Large</td>
+                            <td>Growing</td>
+                            <td>Large</td>
+                            <td>Small</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documentation Quality</strong></td>
+                            <td>Excellent</td>
+                            <td>Good</td>
+                            <td>Good</td>
+                            <td>Excellent</td>
+                            <td>Basic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Integration Ecosystem</strong></td>
+                            <td>Extensive</td>
+                            <td>Moderate</td>
+                            <td>Growing</td>
+                            <td>Extensive</td>
+                            <td>Limited</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Use Case Focus</strong></td>
+                            <td>General Purpose</td>
+                            <td>Autonomous Agents</td>
+                            <td>Multi-Agent Systems</td>
+                            <td>Enterprise Integration</td>
+                            <td>Research/Experimentation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud Integration</strong></td>
+                            <td>Multiple Providers</td>
+                            <td>Limited</td>
+                            <td>Moderate</td>
+                            <td>Azure-focused</td>
+                            <td>Basic</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Detailed Analysis</h2>
+
+            <h3>1. LangChain</h3>
+            <div class="framework-analysis">
+                <h4>Strengths:</h4>
+                <ul>
+                    <li>Comprehensive component ecosystem</li>
+                    <li>Strong community support</li>
+                    <li>Regular updates and improvements</li>
+                    <li>Extensive integration options</li>
+                    <li>Production-ready features</li>
+                </ul>
+
+                <h4>Use Cases:</h4>
+                <pre><code>from langchain.agents import initialize_agent, Tool
+from langchain.llms import OpenAI
+
+# Example: Creating a simple research agent
+llm = OpenAI(temperature=0)
+tools = [
+    Tool(
+        name="Search",
+        func=search.run,
+        description="useful for when you need to answer questions about current events"
+    )
+]
+
+agent = initialize_agent(
+    tools, 
+    llm, 
+    agent="zero-shot-react-description",
+    verbose=True
+)
+
+agent.run("Research the latest developments in quantum computing")</code></pre>
+            </div>
+
+            <h3>2. CrewAI</h3>
+            <div class="framework-analysis">
+                <h4>Strengths:</h4>
+                <ul>
+                    <li>Intuitive multi-agent orchestration</li>
+                    <li>Built-in collaboration patterns</li>
+                    <li>Easy to implement complex workflows</li>
+                    <li>Good for team-based AI systems</li>
+                </ul>
+
+                <h4>Use Cases:</h4>
+                <pre><code>from crewai import Agent, Task, Crew
+
+# Example: Creating a software development crew
+researcher = Agent(
+    role='Research Analyst',
+    goal='Analyze market trends and user needs',
+    backstory='Expert in market research and user behavior analysis',
+    verbose=True
+)
+
+architect = Agent(
+    role='Software Architect',
+    goal='Design scalable system architecture',
+    backstory='Experienced in designing large-scale systems',
+    verbose=True
+)
+
+crew = Crew(
+    agents=[researcher, architect],
+    tasks=[
+        Task(
+            description="Research current market needs",
+            agent=researcher
+        ),
+        Task(
+            description="Design system architecture based on research",
+            agent=architect
+        )
+    ]
+)
+
+result = crew.kickoff()</code></pre>
+            </div>
+
+            <h3>3. Semantic Kernel</h3>
+            <div class="framework-analysis">
+                <h4>Strengths:</h4>
+                <ul>
+                    <li>Strong enterprise integration</li>
+                    <li>Native Azure OpenAI support</li>
+                    <li>Cross-platform compatibility</li>
+                    <li>Memory management features</li>
+                </ul>
+
+                <h4>Use Cases:</h4>
+                <pre><code>using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Orchestration;
+
+// Example: Creating a semantic function
+var kernel = Kernel.Builder
+    .WithAzureChatCompletionService(
+        "gpt-4",
+        "your-azure-endpoint",
+        "your-azure-api-key"
+    )
+    .Build();
+
+string skPrompt = @"
+Input: Write a professional email about {{$topic}}
+Output: Generate a professional email";
+
+var emailFunction = kernel.CreateSemanticFunction(skPrompt);
+
+var context = new ContextVariables();
+context.Set("topic", "project status update");
+
+var result = await emailFunction.InvokeAsync(context);</code></pre>
+            </div>
+
+            <h3>4. AutoGPT</h3>
+            <div class="framework-analysis">
+                <h4>Strengths:</h4>
+                <ul>
+                    <li>Autonomous goal pursuit</li>
+                    <li>Memory management</li>
+                    <li>File operation capabilities</li>
+                    <li>Internet access for research</li>
+                </ul>
+
+                <h4>Use Cases:</h4>
+                <pre><code>from autogpt import AutoGPT
+from autogpt.config import Config
+
+# Example: Creating an autonomous agent
+config = Config()
+agent = AutoGPT(
+    ai_name="ResearchAssistant",
+    memory_type="local",
+    config=config
+)
+
+# Set the agent's goals
+agent.set_goals([
+    "Research the latest AI frameworks",
+    "Summarize key findings",
+    "Create a comparison report"
+])
+
+# Run the agent
+agent.run()</code></pre>
+            </div>
+
+            <h2>Framework Selection Guide</h2>
+            
+            <h3>Choose LangChain if:</h3>
+            <ul>
+                <li>You need a mature, production-ready framework</li>
+                <li>Your project requires extensive integrations</li>
+                <li>You want strong community support</li>
+                <li>You need flexibility in language choice</li>
+            </ul>
+
+            <h3>Choose CrewAI if:</h3>
+            <ul>
+                <li>You're building multi-agent systems</li>
+                <li>You need simple agent collaboration patterns</li>
+                <li>You want an easy-to-learn framework</li>
+                <li>Your focus is on team-based AI workflows</li>
+            </ul>
+
+            <h3>Choose Semantic Kernel if:</h3>
+            <ul>
+                <li>You're building enterprise applications</li>
+                <li>You need strong Azure integration</li>
+                <li>You want cross-platform support</li>
+                <li>You need robust memory management</li>
+            </ul>
+
+            <h3>Choose AutoGPT if:</h3>
+            <ul>
+                <li>You need autonomous agent capabilities</li>
+                <li>You want built-in internet research features</li>
+                <li>You're building experimental applications</li>
+                <li>You need simple file operation capabilities</li>
+            </ul>
+
+            <h2>Skills Required</h2>
+            <div class="skills-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Framework</th>
+                            <th>Core Skills</th>
+                            <th>Additional Skills</th>
+                            <th>Experience Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LangChain</td>
+                            <td>
+                                <ul>
+                                    <li>Python/JavaScript</li>
+                                    <li>Async programming</li>
+                                    <li>API integration</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Vector databases</li>
+                                    <li>Prompt engineering</li>
+                                    <li>ML concepts</li>
+                                </ul>
+                            </td>
+                            <td>Intermediate to Advanced</td>
+                        </tr>
+                        <tr>
+                            <td>CrewAI</td>
+                            <td>
+                                <ul>
+                                    <li>Python</li>
+                                    <li>Basic AI concepts</li>
+                                    <li>Task orchestration</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Multi-agent systems</li>
+                                    <li>Workflow design</li>
+                                </ul>
+                            </td>
+                            <td>Beginner to Intermediate</td>
+                        </tr>
+                        <tr>
+                            <td>Semantic Kernel</td>
+                            <td>
+                                <ul>
+                                    <li>C#/Python/Java</li>
+                                    <li>.NET ecosystem</li>
+                                    <li>Azure services</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Enterprise architecture</li>
+                                    <li>Cloud integration</li>
+                                    <li>Memory patterns</li>
+                                </ul>
+                            </td>
+                            <td>Intermediate to Advanced</td>
+                        </tr>
+                        <tr>
+                            <td>AutoGPT</td>
+                            <td>
+                                <ul>
+                                    <li>Python</li>
+                                    <li>Basic AI concepts</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Autonomous systems</li>
+                                    <li>Goal-based programming</li>
+                                </ul>
+                            </td>
+                            <td>Beginner to Intermediate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Getting Started Guide</h2>
+            <div class="getting-started">
+                <h3>1. Environment Setup</h3>
+                <pre><code># LangChain
+pip install langchain openai chromadb
+
+# CrewAI
+pip install crewai
+
+# Semantic Kernel
+dotnet add package Microsoft.SemanticKernel
+
+# AutoGPT
+pip install autogpt</code></pre>
+
+                <h3>2. Basic Project Structure</h3>
+                <pre><code>project/
+├── config/
+│   ├── settings.py
+│   └── credentials.json
+├── agents/
+│   ├── researcher.py
+│   ├── analyst.py
+│   └── executor.py
+├── tools/
+│   ├── web_search.py
+│   └── data_processor.py
+├── memory/
+│   └── vector_store.py
+└── main.py</code></pre>
+            </div>
+
+            <h2>Performance Considerations</h2>
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Framework</th>
+                            <th>Memory Usage</th>
+                            <th>Response Time</th>
+                            <th>Scalability</th>
+                            <th>Cost Efficiency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LangChain</td>
+                            <td>Moderate to High</td>
+                            <td>Fast</td>
+                            <td>Excellent</td>
+                            <td>Good</td>
+                        </tr>
+                        <tr>
+                            <td>CrewAI</td>
+                            <td>Moderate</td>
+                            <td>Moderate</td>
+                            <td>Good</td>
+                            <td>Very Good</td>
+                        </tr>
+                        <tr>
+                            <td>Semantic Kernel</td>
+                            <td>Low to Moderate</td>
+                            <td>Very Fast</td>
+                            <td>Excellent</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>AutoGPT</td>
+                            <td>High</td>
+                            <td>Slow</td>
+                            <td>Limited</td>
+                            <td>Moderate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Conclusion</h2>
+            <p>Each framework has its unique strengths and ideal use cases. LangChain excels in production environments with its comprehensive feature set, CrewAI simplifies multi-agent development, Semantic Kernel provides robust enterprise integration, and AutoGPT offers powerful autonomous capabilities. Choose the framework that best aligns with your project requirements, team expertise, and scalability needs.</p>
+
+            <div class="next-steps">
+                <h3>Further Resources</h3>
+                <ul>
+                    <li><a href="https://python.langchain.com/docs/get_started/introduction.html">LangChain Documentation</a></li>
+                    <li><a href="https://learn.microsoft.com/en-us/semantic-kernel/overview/">Semantic Kernel Guide</a></li>
+                    <li><a href="https://github.com/joaomdmoura/crewAI">CrewAI GitHub</a></li>
+                    <li><a href="https://github.com/Significant-Gravitas/Auto-GPT">AutoGPT GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <p>&copy; 2025 Arvind Singh. All rights reserved.</p>
+    </footer>
+
+    <script src="../assets/js/blog.js"></script>
+</body>
+</html>
